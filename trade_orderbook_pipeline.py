@@ -86,6 +86,11 @@ class TradeOrderbookPipeline:
         # Load exchanges config from JSON (assuming config_path is the JSON config)
         exchanges_config_from_json = self.config.get("exchanges", {})
 
+        # Ensure all exchanges are enabled as requested
+        for ex_id, ex_conf in exchanges_config_from_json.items():
+            if isinstance(ex_conf, dict):
+                ex_conf['enabled'] = True
+
         self.exchange_manager = ExchangeManager(exchanges_config=exchanges_config_from_json, config_path=config_path)
         self.data_loader = DataLoader(self.exchange_manager, self.config.get('data_loader', {}))
         
@@ -901,6 +906,20 @@ class TradeOrderbookPipeline:
         if self.exchange_manager:
             await self.exchange_manager.stop_all()
         await self.data_loader.close()
+
+        # Cancel all pending tasks to avoid loop closed error, but filter properly
+        current_task = asyncio.current_task()
+        tasks = [t for t in asyncio.all_tasks() if t is not current_task]
+
+        for task in tasks:
+            task.cancel()
+
+        if tasks:
+            # Wrap gather in a try-except to handle any potential issues during shutdown
+            try:
+                await asyncio.wait(tasks, timeout=3.0)
+            except Exception as e:
+                self.logger.error(f"Error during task cancellation: {e}")
  
         self.logger.info("Trade & Orderbook Pipeline v2 stopped")
  
