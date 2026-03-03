@@ -917,7 +917,7 @@ class TradeOrderbookPipeline:
         if tasks:
             # Wrap gather in a try-except to handle any potential issues during shutdown
             try:
-                await asyncio.wait(tasks, timeout=3.0)
+                await asyncio.gather(*tasks, return_exceptions=True)
             except Exception as e:
                 self.logger.error(f"Error during task cancellation: {e}")
  
@@ -948,7 +948,11 @@ async def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
  
-    await pipeline.start()
+    try:
+        await pipeline.start()
+    except Exception as e:
+        _global_logger.error(f"Failed to start pipeline: {e}")
+        return
  
     server_config = uvicorn.Config(
         app=app, # Use the global app instance

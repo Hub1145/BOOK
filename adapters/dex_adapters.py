@@ -69,9 +69,10 @@ class RaydiumAdapter(DEXAdapter):
         data = await self._get("https://api.raydium.io/v2/main/pairs")
         price = 0
         if isinstance(data, list):
+            # Normalize symbol for Raydium (e.g. BTC/USDC -> BTC-USDC)
+            search_symbol = symbol.replace('/', '-').upper()
             for p in data:
-                # Raydium pairs are often like 'SOL-USDC'
-                if p.get('name') == symbol or p.get('name') == symbol.replace('/', '-'):
+                if p.get('name', '').upper() == search_symbol or p.get('name', '').upper() == symbol.upper():
                     price = float(p.get('price', 0))
                     return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, float(p.get('volume24h', 0)), 0, 0)
         return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
@@ -81,12 +82,13 @@ class PancakeSwapAdapter(DEXAdapter):
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.pancakeswap.info/api/v2/tokens")
         tokens = data.get('data', {})
-        price = 0
+        # Extract base token from symbol (e.g. CAKE/BNB -> CAKE)
+        base_symbol = symbol.split('/')[0].upper()
         for addr, info in tokens.items():
-            if info.get('symbol', '').upper() in symbol.upper():
+            if info.get('symbol', '').upper() == base_symbol:
                 price = float(info.get('price', 0))
                 return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
-        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
 
 class CetusAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('cetus', config)
