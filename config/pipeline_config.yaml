@@ -1,0 +1,108 @@
+# Exchange configuration. API keys and secrets are loaded from pipeline_config.json.
+exchanges:
+  cex:
+    enabled: [] # Enable exchanges in pipeline_config.json
+  dex:
+    enabled: [] # Enable exchanges in pipeline_config.json
+
+# Data Loader Configuration
+data_loader:
+  buffer_size: 1000
+  orderbook_snapshot_interval: 60
+  trade_buffer_minutes: 30
+  enable_persistence: true
+  persistence_path: "./data/buffers"
+
+# Feature Extractor Configuration
+extractors:
+  cryptofeed:
+    depth_levels: [1, 5, 10, 20, 50]
+    volume_buckets: [0.1, 0.5, 1.0, 5.0, 10.0]
+  tradebook:
+    windows: [10, 50, 100, 500]
+    volume_buckets: [0.1, 1.0, 10.0, 100.0]
+  technical:
+    periods: [5, 10, 20, 50, 100]
+  dex:
+    slippage_amounts: [100, 1000, 10000, 100000]
+    pool_fee: 0.003
+  futures:
+    lookback_periods: [8, 24, 72, 168]
+  cross_exchange:
+    lookback_window: 300
+  options:
+    risk_free_rate: 0.05
+    dividend_yield: 0.0
+    windows: [10, 50, 100, 500]
+    depth_levels: [1, 5, 10, 20, 50]
+
+# Anomaly Detection Configuration
+detection:
+  iforest:
+    threshold: 0.5
+    contamination: 0.05
+  order_skew:
+    threshold: 0.7
+    skew_threshold: 0.6
+    volume_threshold: 2.0
+  changepoint:
+    threshold: 0.6
+    model: "rbf"
+    penalty: 3
+    min_size: 5
+  hmm:
+    threshold: 0.65
+    n_components: 3
+  matrix_profile:
+    threshold: 0.7
+    window_size: 10
+  level_shift:
+    threshold: 0.6
+    c: 3.0
+    window: 5
+
+# Backtesting Configuration
+backtesting:
+  default:
+    data_source: parquet
+    data_path: "./historical_data"
+    replay_speed: 10.0
+    orderbook_depth: 50
+    trade_history_size: 1000
+    enable_features: true
+    enable_anomaly_detection: true
+    track_performance: true
+    save_results: true
+    results_path: "./backtest_results"
+  scenarios:
+    default:
+      replay_speed: 10.0
+    volatility_spike:
+      description: "Test behavior during high volatility periods"
+    flash_crash:
+      description: "Test during flash crash events"
+
+# API Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  log_level: "debug"
+
+# WebSocket Configuration
+websocket:
+  ping_interval: 30
+  ping_timeout: 10
+  max_connections: 1000
+
+# Monitoring Configuration
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+  logging:
+    level: DEBUG
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    file: "./logs/pipeline.log"
+    max_size: 100
+    backup_count: 5
