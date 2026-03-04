@@ -117,7 +117,8 @@ RESEARCH_DEX = [
     'aster', 'merchantmoe', 'monoswap', 'baseswap', 'deepbook', 'aftermath',
     'kriya', 'bluemove', 'fenix', 'blasterswap', 'bladeswap', 'hyperblast',
     'defituna', 'tessera', 'phoenix', 'lifinity', 'milkroad', 'ecoportal',
-    'hyperion', 'fluid', 'agni', 'tsunamix', 'bex', 'kuru', 'apiarist', 'kintsu'
+    'hyperion', 'fluid', 'agni', 'tsunamix', 'bex', 'kuru', 'apiarist', 'kintsu',
+    'letsbonk', 'heavendex'
 ]
 
 DEX_ADAPTERS = {

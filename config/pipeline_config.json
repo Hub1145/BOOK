@@ -142,6 +142,146 @@
     },
     "bitrue": {
       "enabled": true
+    },
+    "pumpswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "cetus": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "thruster": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "orca": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bisonfi": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "humidifi": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "turbos": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "aster": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "merchantmoe": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "monoswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "baseswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "deepbook": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "aftermath": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kriya": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bluemove": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "fenix": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "blasterswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bladeswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "hyperblast": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "defituna": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "tessera": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "phoenix": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "lifinity": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "milkroad": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "ecoportal": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "hyperion": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "fluid": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "agni": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "tsunamix": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bex": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kuru": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "apiarist": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kintsu": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "letsbonk": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "heavendex": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     }
   },
   "symbols": [],

@@ -186,9 +186,8 @@ class TradeOrderbookPipeline:
                 for symbol_raw in symbols:
                     symbol = self._normalize_symbol_for_ccxt(symbol_raw)
                     try:
-                        ob = await exchange_adapter.fetch_order_book(symbol)
-                        if ob:
-                            normalized_ob = exchange_adapter._normalize_orderbook(ob, symbol)
+                        normalized_ob = await exchange_adapter.fetch_order_book(symbol)
+                        if normalized_ob:
                             exchange_orderbooks[symbol] = normalized_ob.dict()
                     except ccxt.NetworkError as e:
                         self.logger.warning(f"Network error fetching orderbook for {symbol} on {exchange_id}: {e}")
@@ -212,9 +211,8 @@ class TradeOrderbookPipeline:
                 for symbol_raw in symbols:
                     symbol = self._normalize_symbol_for_ccxt(symbol_raw)
                     try:
-                        trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
-                        if trades:
-                            normalized_trades = [exchange_adapter._normalize_trade(t, symbol) for t in trades]
+                        normalized_trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
+                        if normalized_trades:
                             exchange_trades[symbol] = [t.dict() for t in normalized_trades]
                     except ccxt.NetworkError as e:
                         self.logger.warning(f"Network error fetching trades for {symbol} on {exchange_id}: {e}")
@@ -239,9 +237,8 @@ class TradeOrderbookPipeline:
                 temp_orderbooks = {}
                 for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
                     try:
-                        ob = await exchange_adapter.fetch_order_book(symbol)
-                        if ob:
-                            normalized_ob = exchange_adapter._normalize_orderbook(ob, symbol)
+                        normalized_ob = await exchange_adapter.fetch_order_book(symbol)
+                        if normalized_ob:
                             self.data_loader.orderbook_buffers[f"{exchange_id}:{symbol}"] = normalized_ob
                             temp_orderbooks[exchange_id] = normalized_ob
                     except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:
@@ -266,9 +263,8 @@ class TradeOrderbookPipeline:
                 temp_tickers = {}
                 for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
                     try:
-                        ticker = await exchange_adapter.fetch_ticker(symbol)
-                        if ticker:
-                            normalized_ticker = exchange_adapter._normalize_ticker(ticker, symbol)
+                        normalized_ticker = await exchange_adapter.fetch_ticker(symbol)
+                        if normalized_ticker:
                             self.data_loader.ticker_buffers[f"{exchange_id}:{symbol}"] = normalized_ticker
                             temp_tickers[exchange_id] = normalized_ticker
                     except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:

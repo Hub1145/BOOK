@@ -91,9 +91,8 @@ class DataLoader:
             return None
         
         try:
-            raw_orderbook = await exchange_adapter.fetch_order_book(symbol)
-            if raw_orderbook:
-                normalized_ob = exchange_adapter._normalize_orderbook(raw_orderbook, symbol)
+            normalized_ob = await exchange_adapter.fetch_order_book(symbol)
+            if normalized_ob:
                 self.orderbook_buffers[f"{exchange_id}:{symbol}"] = normalized_ob
                 logger.debug(f"Fetched and stored orderbook for {symbol} on {exchange_id}. Levels: bids={len(normalized_ob.bids)}, asks={len(normalized_ob.asks)}")
                 return normalized_ob
@@ -111,10 +110,8 @@ class DataLoader:
             return []
 
         try:
-            raw_trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
-            if raw_trades:
-                # Assuming _normalize_trade takes a single trade dict and symbol
-                normalized_trades = [exchange_adapter._normalize_trade(t, symbol) for t in raw_trades]
+            normalized_trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
+            if normalized_trades:
                 key = f"{exchange_id}:{symbol}"
                 # Append new trades to the deque, maintaining maxlen
                 for trade in normalized_trades:
@@ -135,9 +132,8 @@ class DataLoader:
             return None
 
         try:
-            raw_ticker = await exchange_adapter.fetch_ticker(symbol)
-            if raw_ticker:
-                normalized_ticker = exchange_adapter._normalize_ticker(raw_ticker, symbol)
+            normalized_ticker = await exchange_adapter.fetch_ticker(symbol)
+            if normalized_ticker:
                 self.ticker_buffers[f"{exchange_id}:{symbol}"] = normalized_ticker
                 logger.debug(f"Fetched and stored ticker for {symbol} on {exchange_id}.")
                 return normalized_ticker
