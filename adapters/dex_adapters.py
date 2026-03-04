@@ -65,24 +65,33 @@ class DEXAdapter(ExchangeInterface):
 class RaydiumAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('raydium', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        # Use Raydium public API v2
         data = await self._get("https://api.raydium.io/v2/main/pairs")
         price = 0
         if isinstance(data, list):
-            # Normalize symbol for Raydium (e.g. BTC/USDC -> BTC-USDC)
             search_symbol = symbol.replace('/', '-').upper()
             for p in data:
                 if p.get('name', '').upper() == search_symbol or p.get('name', '').upper() == symbol.upper():
                     price = float(p.get('price', 0))
                     return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, float(p.get('volume24h', 0)), 0, 0)
-        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
+
+class PumpSwapAdapter(DEXAdapter):
+    def __init__(self, config=None): super().__init__('pumpswap', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        data = await self._get("https://frontend-api.pump.fun/coins/latest")
+        if isinstance(data, list):
+            base = symbol.split('/')[0].upper()
+            for c in data:
+                if c.get('symbol', '').upper() == base:
+                    price = float(c.get('usd_market_cap', 0)) / float(c.get('total_supply', 1))
+                    return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
 
 class PancakeSwapAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('pancakeswap', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.pancakeswap.info/api/v2/tokens")
         tokens = data.get('data', {})
-        # Extract base token from symbol (e.g. CAKE/BNB -> CAKE)
         base_symbol = symbol.split('/')[0].upper()
         for addr, info in tokens.items():
             if info.get('symbol', '').upper() == base_symbol:
@@ -108,12 +117,13 @@ RESEARCH_DEX = [
     'aster', 'merchantmoe', 'monoswap', 'baseswap', 'deepbook', 'aftermath',
     'kriya', 'bluemove', 'fenix', 'blasterswap', 'bladeswap', 'hyperblast',
     'defituna', 'tessera', 'phoenix', 'lifinity', 'milkroad', 'ecoportal',
-    'hyperion', 'fluid', 'agni', 'tsunamix'
+    'hyperion', 'fluid', 'agni', 'tsunamix', 'bex', 'kuru', 'apiarist', 'kintsu'
 ]
 
 DEX_ADAPTERS = {
     'raydium': RaydiumAdapter,
     'pancakeswap': PancakeSwapAdapter,
+    'pumpswap': PumpSwapAdapter,
     'cetus': CetusAdapter,
 }
 

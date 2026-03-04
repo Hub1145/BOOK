@@ -50,22 +50,22 @@ class CCXTAdapter(ExchangeInterface):
             logger.info(f"Connected to CCXT exchange: {self.exchange_id}")
         except Exception as e:
             logger.error(f"Error connecting to CCXT {self.exchange_id}: {e}")
-            raise
+            # Keep as connected=False
 
     async def disconnect(self) -> None:
         if hasattr(self.exchange, 'close'):
             await self.exchange.close()
         self.connected = False
 
-    async def fetch_order_book(self, symbol: str) -> Dict:
+    async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
         ob = await self.exchange.fetch_order_book(symbol)
         return self._normalize_orderbook(ob, symbol)
 
-    async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[Dict]:
+    async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[NormalizedTrade]:
         trades = await self.exchange.fetch_trades(symbol, limit=limit)
         return [self._normalize_trade(t, symbol) for t in trades]
 
-    async def fetch_ticker(self, symbol: str) -> Dict:
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         ticker = await self.exchange.fetch_ticker(symbol)
         return self._normalize_ticker(ticker, symbol)
 
@@ -142,36 +142,13 @@ class CustomCEXAdapter(ExchangeInterface):
             high_24h=0, low_24h=0
         )
 
-# --- Custom Implementations ---
-
-class BitrueAdapter(CustomCEXAdapter):
-    def __init__(self, config=None): super().__init__('bitrue', config)
-    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://openapi.bitrue.com/api/v1/ticker/24hr", {"symbol": s})
-        return NormalizedTicker(
-            exchange=self.exchange_id, symbol=symbol, timestamp=datetime.utcnow(),
-            bid=float(raw.get('bidPrice', 0)), ask=float(raw.get('askPrice', 0)),
-            last=float(raw.get('lastPrice', 0)), volume_24h=float(raw.get('volume', 0)),
-            high_24h=float(raw.get('highPrice', 0)), low_24h=float(raw.get('lowPrice', 0))
-        )
-    async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://openapi.bitrue.com/api/v1/depth", {"symbol": s, "limit": 100})
-        bids = [OrderBookLevel(price=float(b[0]), volume=float(b[1])) for b in raw.get('bids', [])]
-        asks = [OrderBookLevel(price=float(a[0]), volume=float(a[1])) for a in raw.get('asks', [])]
-        return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), bids, asks)
-    async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://openapi.bitrue.com/api/v1/trades", {"symbol": s, "limit": limit})
-        return [NormalizedTrade(self.exchange_id, symbol, datetime.utcnow(), str(t.get('id')), float(t.get('price')), float(t.get('qty')), 'buy', 'buy') for t in raw]
+# --- Custom Implementations based on DOCX ---
 
 class CoinWAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('coinw', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        s = symbol.replace('/', '').upper()
-        data = await self._get(f"https://api.coinw.com/api/v1/public?command=returnTicker")
-        raw = data.get(s, {})
+        data = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
+        raw = data.get(symbol.replace('/', '').upper(), {})
         return NormalizedTicker(
             exchange=self.exchange_id, symbol=symbol, timestamp=datetime.utcnow(),
             bid=float(raw.get('highestBid', 0)), ask=float(raw.get('lowestAsk', 0)),
@@ -179,37 +156,90 @@ class CoinWAdapter(CustomCEXAdapter):
             high_24h=float(raw.get('high24hr', 0)), low_24h=float(raw.get('low24hr', 0))
         )
     async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://api.coinw.com/api/v1/public?command=returnOrderBook&symbol={s}")
+        raw = await self._get(f"https://api.coinw.com/api/v1/public?command=returnOrderBook&symbol={symbol.replace('/', '').upper()}")
         bids = [OrderBookLevel(price=float(b[0]), volume=float(b[1])) for b in raw.get('bids', [])]
         asks = [OrderBookLevel(price=float(a[0]), volume=float(a[1])) for a in raw.get('asks', [])]
         return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), bids, asks)
-    async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://api.coinw.com/api/v1/public?command=returnTradeHistory&symbol={s}")
-        return [NormalizedTrade(self.exchange_id, symbol, datetime.utcnow(), str(t.get('trade_id')), float(t.get('rate')), float(t.get('amount')), 'buy', 'buy') for t in raw]
+
+class BKEXAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('bkex', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.bkex.com/v2/common/ticker?symbol={symbol.replace('/', '_').upper()}")
+        data = raw.get('data', {})
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, float(data.get('last', 0)), float(data.get('volume', 0)), 0, 0)
 
 class FameEXAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('fameex', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        s = symbol.replace('/', '_').upper()
-        raw = await self._get(f"https://openapi.fameex.com/v2/public/ticker?base={s.split('_')[0]}&quote={s.split('_')[1]}")
-        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(raw.get('bid', 0)), float(raw.get('ask', 0)), float(raw.get('last', 0)), float(raw.get('volume', 0)), 0, 0)
+        base, quote = symbol.split('/')
+        raw = await self._get(f"https://openapi.fameex.com/v2/public/ticker?base={base.upper()}&quote={quote.upper()}")
+        data = raw.get('data', {})
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(data.get('bid', 0)), float(data.get('ask', 0)), float(data.get('last', 0)), float(data.get('volume', 0)), 0, 0)
+
+class WEEXAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('weex', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.weex.com/api/spot/v1/market/ticker?symbol={symbol.replace('/', '').upper()}")
+        data = raw.get('data', {})
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(data.get('buy', 0)), float(data.get('sell', 0)), float(data.get('last', 0)), float(data.get('vol', 0)), 0, 0)
+
+class CoinstoreAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('coinstore', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get("https://api.coinstore.com/api/v1/market/tickers")
+        for t in raw.get('data', []):
+            if t.get('symbol') == symbol.replace('/', '').upper():
+                return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(t.get('bid', 0)), float(t.get('ask', 0)), float(t.get('last', 0)), float(t.get('vol', 0)), 0, 0)
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
 
 class BitunixAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('bitunix', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        s = symbol.replace('/', '').upper()
-        raw = await self._get(f"https://api.bitunix.com/api/spot/v1/market/last_price?symbol={s}")
-        price = float(raw.get('data', {}).get('last_price', 0))
+        raw = await self._get(f"https://api.bitunix.com/api/spot/v1/market/last_price?symbol={symbol.replace('/', '').upper()}")
+        data = raw.get('data', {})
+        price = float(data.get('last_price', 0))
         return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), price, price, price, 0, 0, 0)
+
+class WazirXCustomAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('wazirx', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.wazirx.com/sapi/v1/ticker/24hr?symbol={symbol.replace('/', '').lower()}")
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(raw.get('bidPrice', 0)), float(raw.get('askPrice', 0)), float(raw.get('lastPrice', 0)), float(raw.get('volume', 0)), 0, 0)
 
 class LMAXAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('lmax', config)
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        s = symbol.replace('/', '-').upper()
-        raw = await self._get(f"https://api.lmaxdigital.com/v1/ticker/{s}")
+        raw = await self._get(f"https://api.lmaxdigital.com/v1/ticker/{symbol.replace('/', '-').upper()}")
         return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(raw.get('bid', 0)), float(raw.get('ask', 0)), float(raw.get('lastPrice', 0)), 0, 0, 0)
+
+class BitcastleAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('bitcastle', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get("https://api.bitcastle.io/api/v2/public/exchange/ticker")
+        for t in raw.get('data', []):
+            if t.get('symbol') == symbol.replace('/', '').lower():
+                return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(t.get('bid', 0)), float(t.get('ask', 0)), float(t.get('last', 0)), 0, 0, 0)
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
+
+class HibtAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('hibt', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.hibt.com/api/v1/market/ticker?symbol={symbol.replace('/', '_').upper()}")
+        data = raw.get('data', {})
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(data.get('bid', 0)), float(data.get('ask', 0)), float(data.get('last', 0)), float(data.get('vol', 0)), 0, 0)
+
+class SwissBorgAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('swissborg', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.binance.com/api/v3/ticker/24hr?symbol={symbol.replace('/', '').upper()}")
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(raw.get('bidPrice', 0)), float(raw.get('askPrice', 0)), float(raw.get('lastPrice', 0)), float(raw.get('volume', 0)), 0, 0)
+
+class PionexAdapter(CustomCEXAdapter):
+    def __init__(self, config=None): super().__init__('pionex', config)
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        raw = await self._get(f"https://api.pionex.com/api/v1/market/tickers?symbol={symbol.replace('/', '_').upper()}")
+        data = raw.get('data', {}).get('tickers', [{}])[0]
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), float(data.get('bid', 0)), float(data.get('ask', 0)), float(data.get('last', 0)), 0, 0, 0)
 
 # Register all research exchanges, prefer CCXT
 RESEARCH_CEX = [
@@ -222,6 +252,24 @@ RESEARCH_CEX = [
     'lmax', 'inx', 'buyucoin', 'ueex', 'bika', 'kcex', 'bkex', 'fameex', 'weex', 'zengo', 'uphold', 'egemoney'
 ]
 
+# Map not-in-CCXT to custom adapters
+CUSTOM_ADAPTER_MAP = {
+    'coinw': CoinWAdapter, 'bkex': BKEXAdapter, 'fameex': FameEXAdapter,
+    'weex': WEEXAdapter, 'coinstore': CoinstoreAdapter, 'bitunix': BitunixAdapter,
+    'wazirx': WazirXCustomAdapter, 'lmax': LMAXAdapter, 'bitcastle': BitcastleAdapter,
+    'hibt': HibtAdapter, 'swissborg': SwissBorgAdapter, 'pionex': PionexAdapter,
+    'korbit': type("KorbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('korbit', config)}),
+    'paribu': type("ParibuAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('paribu', config)}),
+    'buyucoin': type("BuyUcoinAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('buyucoin', config)}),
+    'inx': type("INXAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('inx', config)}),
+    'uphold': type("UpholdAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('uphold', config)}),
+    'egemoney': type("EgeMoneyAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('egemoney', config)}),
+    'btcc': type("BTCCAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('btcc', config)}),
+    'probit': type("ProbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('probit', config)}),
+    'tidex': type("TidexAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('tidex', config)}),
+    'azbit': type("AzbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('azbit', config)}),
+}
+
 CEX_ADAPTERS = {}
 
 for ex_id in RESEARCH_CEX:
@@ -230,26 +278,23 @@ for ex_id in RESEARCH_CEX:
             def __init__(self, config=None, eid=ex_id):
                 super().__init__(eid, config)
         CEX_ADAPTERS[ex_id] = ResearchCCXTAdapter
+    elif ex_id in CUSTOM_ADAPTER_MAP:
+        CEX_ADAPTERS[ex_id] = CUSTOM_ADAPTER_MAP[ex_id]
     else:
-        # Custom or generic fallback
-        if ex_id == 'bitrue': CEX_ADAPTERS[ex_id] = BitrueAdapter
-        elif ex_id == 'coinw': CEX_ADAPTERS[ex_id] = CoinWAdapter
-        elif ex_id == 'fameex': CEX_ADAPTERS[ex_id] = FameEXAdapter
-        elif ex_id == 'bitunix': CEX_ADAPTERS[ex_id] = BitunixAdapter
-        elif ex_id == 'lmax': CEX_ADAPTERS[ex_id] = LMAXAdapter
-        else:
-            class GenericCustomAdapter(CustomCEXAdapter):
-                def __init__(self, config=None, eid=ex_id): super().__init__(eid, config)
-                async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-                    return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
-                async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
-                    return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), [], [])
-                async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
-                    return []
-            CEX_ADAPTERS[ex_id] = GenericCustomAdapter
+        class GenericCustomAdapter(CustomCEXAdapter):
+            def __init__(self, config=None, eid=ex_id): super().__init__(eid, config)
+            async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+                return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
+            async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
+                return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), [], [])
+            async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
+                return []
+        CEX_ADAPTERS[ex_id] = GenericCustomAdapter
 
 def get_cex_adapter(exchange_id: str, config: Optional[Dict[str, Any]] = None) -> ExchangeInterface:
     adapter_class = CEX_ADAPTERS.get(exchange_id)
     if not adapter_class:
+        if CCXT_AVAILABLE and exchange_id in ccxt.exchanges:
+            return CCXTAdapter(exchange_id, config)
         raise ValueError(f"Unsupported exchange: {exchange_id}")
     return adapter_class(config)
