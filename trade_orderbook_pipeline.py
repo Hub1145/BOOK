@@ -188,7 +188,7 @@ class TradeOrderbookPipeline:
                     try:
                         normalized_ob = await exchange_adapter.fetch_order_book(symbol)
                         if normalized_ob:
-                            exchange_orderbooks[symbol] = normalized_ob.dict()
+                            exchange_orderbooks[symbol] = normalized_ob.dict() if hasattr(normalized_ob, "dict") else normalized_ob
                     except ccxt.NetworkError as e:
                         self.logger.warning(f"Network error fetching orderbook for {symbol} on {exchange_id}: {e}")
                     except ccxt.ExchangeError as e:

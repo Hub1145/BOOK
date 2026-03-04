@@ -112,13 +112,11 @@ class CetusAdapter(DEXAdapter):
 
 # Registry
 RESEARCH_DEX = [
-    'raydium', 'pancakeswap', 'pumpswap', 'cetus', 'aerodrome', 'thruster',
-    'sushiswap', 'uniswap_v3', 'orca', 'bisonfi', 'humidifi', 'turbos',
-    'aster', 'merchantmoe', 'monoswap', 'baseswap', 'deepbook', 'aftermath',
-    'kriya', 'bluemove', 'fenix', 'blasterswap', 'bladeswap', 'hyperblast',
-    'defituna', 'tessera', 'phoenix', 'lifinity', 'milkroad', 'ecoportal',
-    'hyperion', 'fluid', 'agni', 'tsunamix', 'bex', 'kuru', 'apiarist', 'kintsu',
-    'letsbonk', 'heavendex'
+    'pumpswap', 'raydium', 'bisonfi', 'humidifi', 'pancakeswap', 'aerodrome', 'cetus',
+    'turbos', 'thruster', 'aster', 'merchantmoe', 'monoswap', 'baseswap', 'sushiswap', 'orca',
+    'bex', 'kuru', 'deepbook', 'letsbonk', 'heavendex', 'apiarist', 'kintsu', 'fenix',
+    'blasterswap', 'bladeswap', 'hyperblast', 'defituna', 'tessera', 'phoenix', 'lifinity',
+    'aftermath', 'kriya', 'bluemove', 'milkroad', 'ecoportal', 'hyperion', 'fluid', 'agni', 'tsunamix'
 ]
 
 DEX_ADAPTERS = {

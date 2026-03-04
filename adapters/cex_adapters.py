@@ -50,7 +50,6 @@ class CCXTAdapter(ExchangeInterface):
             logger.info(f"Connected to CCXT exchange: {self.exchange_id}")
         except Exception as e:
             logger.error(f"Error connecting to CCXT {self.exchange_id}: {e}")
-            # Keep as connected=False
 
     async def disconnect(self) -> None:
         if hasattr(self.exchange, 'close'):
@@ -134,13 +133,14 @@ class CustomCEXAdapter(ExchangeInterface):
                 return {}
         except: return {}
 
-    def _normalize_ticker(self, raw: Dict, symbol: str) -> NormalizedTicker:
-        return NormalizedTicker(
-            exchange=self.exchange_id, symbol=symbol, timestamp=datetime.utcnow(),
-            bid=float(raw.get('bid', 0)), ask=float(raw.get('ask', 0)),
-            last=float(raw.get('last', 0)), volume_24h=float(raw.get('volume', 0)),
-            high_24h=0, low_24h=0
-        )
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
+        return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
+
+    async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
+        return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), [], [])
+
+    async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
+        return []
 
 # --- Custom Implementations based on DOCX ---
 
@@ -245,14 +245,14 @@ class PionexAdapter(CustomCEXAdapter):
 RESEARCH_CEX = [
     'mexc', 'bybit', 'kucoin', 'poloniex', 'bitmart', 'lbank', 'xt', 'htx', 'binance', 'okx',
     'bitget', 'upbit', 'whitebit', 'bithumb', 'bullish', 'bitrue', 'ascendex', 'digifinex',
-    'coinw', 'p2b', 'bingx', 'toobit', 'coinex', 'bitvavo', 'hitbtc', 'gateio', 'mercado',
-    'bitopro', 'paymium', 'phemex', 'bitflyer', 'coincheck', 'gemini', 'cryptocom', 'bitstamp',
-    'kraken', 'coinbase', 'blofin', 'bydfi', 'coinmate', 'wazirx', 'pionex', 'probit',
-    'tidex', 'korbit', 'paribu', 'bitcastle', 'hibt', 'btcc', 'azbit', 'coinstore', 'bitunix',
-    'lmax', 'inx', 'buyucoin', 'ueex', 'bika', 'kcex', 'bkex', 'fameex', 'weex', 'zengo', 'uphold', 'egemoney'
+    'coinw', 'p2b', 'bingx', 'kcex', 'bkex', 'fameex', 'weex', 'azbit', 'coinstore', 'toobit',
+    'bitunix', 'coinex', 'bitvavo', 'hitbtc', 'pionex', 'btcc', 'probit', 'tidex', 'wazirx',
+    'gateio', 'mercado', 'bitopro', 'paymium', 'phemex', 'korbit', 'bitflyer', 'coincheck',
+    'lmax', 'gemini', 'cryptocom', 'bitstamp', 'kraken', 'coinbase', 'paribu', 'bitcastle',
+    'blofin', 'hibt', 'zengo', 'uphold', 'pionexus', 'swissborg', 'egemoney', 'bydfi', 'inx',
+    'coinmate', 'buyucoin', 'ueex', 'bika'
 ]
 
-# Map not-in-CCXT to custom adapters
 CUSTOM_ADAPTER_MAP = {
     'coinw': CoinWAdapter, 'bkex': BKEXAdapter, 'fameex': FameEXAdapter,
     'weex': WEEXAdapter, 'coinstore': CoinstoreAdapter, 'bitunix': BitunixAdapter,
@@ -283,12 +283,6 @@ for ex_id in RESEARCH_CEX:
     else:
         class GenericCustomAdapter(CustomCEXAdapter):
             def __init__(self, config=None, eid=ex_id): super().__init__(eid, config)
-            async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-                return NormalizedTicker(self.exchange_id, symbol, datetime.utcnow(), 0, 0, 0, 0, 0, 0)
-            async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
-                return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), [], [])
-            async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
-                return []
         CEX_ADAPTERS[ex_id] = GenericCustomAdapter
 
 def get_cex_adapter(exchange_id: str, config: Optional[Dict[str, Any]] = None) -> ExchangeInterface:

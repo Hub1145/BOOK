@@ -45,6 +45,9 @@
     "bullish": {
       "enabled": true
     },
+    "bitrue": {
+      "enabled": true
+    },
     "ascendex": {
       "enabled": true
     },
@@ -60,7 +63,28 @@
     "bingx": {
       "enabled": true
     },
+    "kcex": {
+      "enabled": true
+    },
+    "bkex": {
+      "enabled": true
+    },
+    "fameex": {
+      "enabled": true
+    },
+    "weex": {
+      "enabled": true
+    },
+    "azbit": {
+      "enabled": true
+    },
+    "coinstore": {
+      "enabled": true
+    },
     "toobit": {
+      "enabled": true
+    },
+    "bitunix": {
       "enabled": true
     },
     "coinex": {
@@ -70,6 +94,21 @@
       "enabled": true
     },
     "hitbtc": {
+      "enabled": true
+    },
+    "pionex": {
+      "enabled": true
+    },
+    "btcc": {
+      "enabled": true
+    },
+    "probit": {
+      "enabled": true
+    },
+    "tidex": {
+      "enabled": true
+    },
+    "wazirx": {
       "enabled": true
     },
     "gateio": {
@@ -87,10 +126,16 @@
     "phemex": {
       "enabled": true
     },
+    "korbit": {
+      "enabled": true
+    },
     "bitflyer": {
       "enabled": true
     },
     "coincheck": {
+      "enabled": true
+    },
+    "lmax": {
       "enabled": true
     },
     "gemini": {
@@ -108,54 +153,56 @@
     "coinbase": {
       "enabled": true
     },
+    "paribu": {
+      "enabled": true
+    },
+    "bitcastle": {
+      "enabled": true
+    },
     "blofin": {
+      "enabled": true
+    },
+    "hibt": {
+      "enabled": true
+    },
+    "zengo": {
+      "enabled": true
+    },
+    "uphold": {
+      "enabled": true
+    },
+    "pionexus": {
+      "enabled": true
+    },
+    "swissborg": {
+      "enabled": true
+    },
+    "egemoney": {
       "enabled": true
     },
     "bydfi": {
       "enabled": true
     },
+    "inx": {
+      "enabled": true
+    },
     "coinmate": {
       "enabled": true
     },
-    "wazirx": {
+    "buyucoin": {
       "enabled": true
     },
-    "raydium": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    "ueex": {
+      "enabled": true
     },
-    "pancakeswap": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "uniswap_v3": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "sushiswap": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "aerodrome": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "bitrue": {
+    "bika": {
       "enabled": true
     },
     "pumpswap": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
-    "cetus": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "thruster": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "orca": {
+    "raydium": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
@@ -167,7 +214,23 @@
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
+    "pancakeswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "aerodrome": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "cetus": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
     "turbos": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "thruster": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
@@ -187,19 +250,39 @@
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
+    "sushiswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "orca": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bex": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kuru": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
     "deepbook": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
-    "aftermath": {
+    "letsbonk": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
-    "kriya": {
+    "heavendex": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
-    "bluemove": {
+    "apiarist": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kintsu": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
@@ -235,6 +318,18 @@
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
+    "aftermath": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "kriya": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "bluemove": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
     "milkroad": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
@@ -256,30 +351,6 @@
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "tsunamix": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "bex": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "kuru": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "apiarist": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "kintsu": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "letsbonk": {
-      "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
-    },
-    "heavendex": {
       "enabled": true,
       "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     }
