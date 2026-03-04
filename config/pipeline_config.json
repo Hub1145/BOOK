@@ -122,23 +122,23 @@
     },
     "raydium": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "pancakeswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "uniswap_v3": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "sushiswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "aerodrome": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "bitrue": {
       "enabled": true
