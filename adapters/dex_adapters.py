@@ -60,6 +60,9 @@ class DEXAdapter(ExchangeInterface):
     async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[NormalizedTrade]:
         return []
 
+    async def get_instruments(self) -> List[str]:
+        return []
+
 # --- Specific Implementations ---
 
 class RaydiumAdapter(DEXAdapter):

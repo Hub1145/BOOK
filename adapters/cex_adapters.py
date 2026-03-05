@@ -56,17 +56,40 @@ class CCXTAdapter(ExchangeInterface):
             await self.exchange.close()
         self.connected = False
 
-    async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
-        ob = await self.exchange.fetch_order_book(symbol)
-        return self._normalize_orderbook(ob, symbol)
+    async def fetch_order_book(self, symbol: str) -> Optional[NormalizedOrderBook]:
+        try:
+            if symbol not in self.exchange.symbols:
+                await self.exchange.load_markets()
+            if symbol not in self.exchange.symbols:
+                return None
+            ob = await self.exchange.fetch_order_book(symbol)
+            return self._normalize_orderbook(ob, symbol)
+        except: return None
 
     async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[NormalizedTrade]:
-        trades = await self.exchange.fetch_trades(symbol, limit=limit)
-        return [self._normalize_trade(t, symbol) for t in trades]
+        try:
+            if symbol not in self.exchange.symbols:
+                await self.exchange.load_markets()
+            if symbol not in self.exchange.symbols:
+                return []
+            params = {}
+            if self.exchange_id == 'p2b': params['lastId'] = 1 # Dummy for p2b requirement
+            trades = await self.exchange.fetch_trades(symbol, limit=limit, params=params)
+            return [self._normalize_trade(t, symbol) for t in trades]
+        except: return []
 
-    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
-        ticker = await self.exchange.fetch_ticker(symbol)
-        return self._normalize_ticker(ticker, symbol)
+    async def fetch_ticker(self, symbol: str) -> Optional[NormalizedTicker]:
+        try:
+            if symbol not in self.exchange.symbols:
+                await self.exchange.load_markets()
+            if symbol not in self.exchange.symbols:
+                return None
+            ticker = await self.exchange.fetch_ticker(symbol)
+            return self._normalize_ticker(ticker, symbol)
+        except: return None
+
+    async def get_instruments(self) -> List[str]:
+        return list(self.exchange.symbols) if self.exchange.symbols else []
 
     def _normalize_orderbook(self, orderbook: Dict, symbol: str) -> NormalizedOrderBook:
         normalized_bids = [OrderBookLevel(price=float(b[0]), volume=float(b[1])) for b in orderbook.get('bids', [])[:50]]
@@ -140,6 +163,9 @@ class CustomCEXAdapter(ExchangeInterface):
         return NormalizedOrderBook(self.exchange_id, symbol, datetime.utcnow(), [], [])
 
     async def fetch_trades(self, symbol: str, limit: int = 100) -> List[NormalizedTrade]:
+        return []
+
+    async def get_instruments(self) -> List[str]:
         return []
 
 # --- Custom Implementations based on DOCX ---

@@ -179,104 +179,122 @@ class TradeOrderbookPipeline:
             
         @self.app.get("/orderbook")
         async def get_orderbook_for_multiple_symbols(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get orderbooks for multiple symbols across all enabled exchanges."""
+            """Get orderbooks for multiple symbols across all enabled exchanges concurrently."""
             all_orderbooks = {}
-            for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                exchange_orderbooks = {}
-                for symbol_raw in symbols:
-                    symbol = self._normalize_symbol_for_ccxt(symbol_raw)
-                    try:
-                        normalized_ob = await exchange_adapter.fetch_order_book(symbol)
-                        if normalized_ob:
-                            exchange_orderbooks[symbol] = normalized_ob.dict() if hasattr(normalized_ob, "dict") else normalized_ob
-                    except ccxt.NetworkError as e:
-                        self.logger.warning(f"Network error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                    except ccxt.ExchangeError as e:
-                        self.logger.warning(f"Exchange error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                    except Exception as e:
-                        self.logger.warning(f"Unexpected error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                if exchange_orderbooks:
-                    all_orderbooks[exchange_id] = exchange_orderbooks
+
+            async def fetch_ob(ex_id, ex_adapter, sym_raw):
+                sym = self._normalize_symbol_for_ccxt(sym_raw)
+                try:
+                    res = await ex_adapter.fetch_order_book(sym)
+                    return ex_id, sym, res
+                except Exception as e:
+                    self.logger.warning(f"Error fetching orderbook for {sym} on {ex_id}: {e}")
+                    return ex_id, sym, None
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym_raw in symbols:
+                    tasks.append(fetch_ob(ex_id, ex_adapter, sym_raw))
+
+            results = await asyncio.gather(*tasks)
+            for ex_id, sym, res in results:
+                if res:
+                    if ex_id not in all_orderbooks: all_orderbooks[ex_id] = {}
+                    all_orderbooks[ex_id][sym] = res.dict() if hasattr(res, "dict") else res
             
             if not all_orderbooks:
-                raise HTTPException(status_code=404, detail=f"No orderbooks found for any of the provided symbols on any enabled exchange.")
+                raise HTTPException(status_code=404, detail=f"No orderbooks found for any symbols.")
             return all_orderbooks
             
         @self.app.get("/trades")
         async def get_trades_for_multiple_symbols(symbols: List[str] = Query(..., description="Comma-separated list of symbols"), limit: int = 100):
-            """Get recent trades for multiple symbols across all enabled exchanges."""
+            """Get recent trades for multiple symbols across all enabled exchanges concurrently."""
             all_trades = {}
-            for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                exchange_trades = {}
-                for symbol_raw in symbols:
-                    symbol = self._normalize_symbol_for_ccxt(symbol_raw)
-                    try:
-                        normalized_trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
-                        if normalized_trades:
-                            exchange_trades[symbol] = [t.dict() for t in normalized_trades]
-                    except ccxt.NetworkError as e:
-                        self.logger.warning(f"Network error fetching trades for {symbol} on {exchange_id}: {e}")
-                    except ccxt.ExchangeError as e:
-                        self.logger.warning(f"Exchange error fetching trades for {symbol} on {exchange_id}: {e}")
-                    except Exception as e:
-                        self.logger.warning(f"Unexpected error fetching trades for {symbol} on {exchange_id}: {e}")
-                if exchange_trades:
-                    all_trades[exchange_id] = exchange_trades
+
+            async def fetch_tr(ex_id, ex_adapter, sym_raw):
+                sym = self._normalize_symbol_for_ccxt(sym_raw)
+                try:
+                    res = await ex_adapter.fetch_trades(sym, limit=limit)
+                    return ex_id, sym, res
+                except Exception as e:
+                    self.logger.warning(f"Error fetching trades for {sym} on {ex_id}: {e}")
+                    return ex_id, sym, None
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym_raw in symbols:
+                    tasks.append(fetch_tr(ex_id, ex_adapter, sym_raw))
+
+            results = await asyncio.gather(*tasks)
+            for ex_id, sym, res in results:
+                if res:
+                    if ex_id not in all_trades: all_trades[ex_id] = {}
+                    all_trades[ex_id][sym] = [t.dict() if hasattr(t, "dict") else t for t in res]
             
             if not all_trades:
-                raise HTTPException(status_code=404, detail=f"No trades found for any of the provided symbols on any enabled exchange.")
+                raise HTTPException(status_code=404, detail=f"No trades found for any symbols.")
             return all_trades
             
         @self.app.get("/aggregated")
         async def get_aggregated_orderbook(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get aggregated orderbook across exchanges for multiple symbols."""
+            """Get aggregated orderbook across exchanges for multiple symbols concurrently."""
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
             
+            async def fetch_agg(ex_id, ex_adapter, sym):
+                try:
+                    res = await ex_adapter.fetch_order_book(sym)
+                    if res:
+                        self.data_loader.orderbook_buffers[f"{ex_id}:{sym}"] = res
+                    return True
+                except:
+                    return False
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym in normalized_symbols:
+                    tasks.append(fetch_agg(ex_id, ex_adapter, sym))
+
+            await asyncio.gather(*tasks)
+
             all_aggregated_orderbooks = {}
             for symbol in normalized_symbols:
-                temp_orderbooks = {}
-                for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                    try:
-                        normalized_ob = await exchange_adapter.fetch_order_book(symbol)
-                        if normalized_ob:
-                            self.data_loader.orderbook_buffers[f"{exchange_id}:{symbol}"] = normalized_ob
-                            temp_orderbooks[exchange_id] = normalized_ob
-                    except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:
-                        self.logger.warning(f"Could not fetch orderbook for {symbol} on {exchange_id} for aggregation: {e}")
-
-                if temp_orderbooks:
-                    df = self.data_loader.get_aggregated_orderbook(symbol)
-                    if not df.empty:
-                        all_aggregated_orderbooks[symbol] = df.to_dict()
+                df = self.data_loader.get_aggregated_orderbook(symbol)
+                if not df.empty:
+                    all_aggregated_orderbooks[symbol] = df.to_dict()
             
             if not all_aggregated_orderbooks:
-                raise HTTPException(status_code=404, detail=f"No aggregated orderbooks found for the provided symbols.")
+                raise HTTPException(status_code=404, detail=f"No aggregated orderbooks found.")
             return all_aggregated_orderbooks
             
         @self.app.get("/matrix")
         async def get_cross_exchange_matrices(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get cross-exchange price matrices for multiple symbols."""
+            """Get cross-exchange price matrices for multiple symbols concurrently."""
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
+
+            async def fetch_mtx(ex_id, ex_adapter, sym):
+                try:
+                    res = await ex_adapter.fetch_ticker(sym)
+                    if res:
+                        self.data_loader.ticker_buffers[f"{ex_id}:{sym}"] = res
+                    return True
+                except:
+                    return False
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym in normalized_symbols:
+                    tasks.append(fetch_mtx(ex_id, ex_adapter, sym))
+
+            await asyncio.gather(*tasks)
 
             all_matrices = {}
             for symbol in normalized_symbols:
-                temp_tickers = {}
-                for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                    try:
-                        normalized_ticker = await exchange_adapter.fetch_ticker(symbol)
-                        if normalized_ticker:
-                            self.data_loader.ticker_buffers[f"{exchange_id}:{symbol}"] = normalized_ticker
-                            temp_tickers[exchange_id] = normalized_ticker
-                    except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:
-                        self.logger.warning(f"Could not fetch ticker for {symbol} on {exchange_id} for matrix: {e}")
-
-                if temp_tickers:
-                    df = self.data_loader.get_cross_exchange_matrix(symbol)
-                    if not df.empty:
-                        all_matrices[symbol] = df.to_dict()
+                df = self.data_loader.get_cross_exchange_matrix(symbol)
+                if not df.empty:
+                    all_matrices[symbol] = df.to_dict()
             
             if not all_matrices:
-                raise HTTPException(status_code=404, detail=f"No cross-exchange matrices found for the provided symbols.")
+                raise HTTPException(status_code=404, detail=f"No cross-exchange matrices found.")
             return all_matrices
             
         @self.app.get("/features")
