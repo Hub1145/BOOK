@@ -166,12 +166,16 @@ class CustomCEXAdapter(ExchangeInterface):
         return []
 
     async def get_instruments(self) -> List[str]:
+        # Implementation depends on specific adapter
         return []
 
 # --- Custom Implementations based on DOCX ---
 
 class CoinWAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('coinw', config)
+    async def get_instruments(self) -> List[str]:
+        data = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
+        return list(data.keys())
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
         raw = data.get(symbol.replace('/', '').upper(), {})
@@ -211,6 +215,9 @@ class WEEXAdapter(CustomCEXAdapter):
 
 class CoinstoreAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('coinstore', config)
+    async def get_instruments(self) -> List[str]:
+        raw = await self._get("https://api.coinstore.com/api/v1/market/tickers")
+        return [t.get('symbol') for t in raw.get('data', [])]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         raw = await self._get("https://api.coinstore.com/api/v1/market/tickers")
         for t in raw.get('data', []):
@@ -220,6 +227,9 @@ class CoinstoreAdapter(CustomCEXAdapter):
 
 class BitunixAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('bitunix', config)
+    async def get_instruments(self) -> List[str]:
+        raw = await self._get("https://api.bitunix.com/api/spot/v1/market/tickers")
+        return [t.get('symbol') for t in raw.get('data', [])]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         raw = await self._get(f"https://api.bitunix.com/api/spot/v1/market/last_price?symbol={symbol.replace('/', '').upper()}")
         data = raw.get('data', {})
@@ -240,6 +250,9 @@ class LMAXAdapter(CustomCEXAdapter):
 
 class BitcastleAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('bitcastle', config)
+    async def get_instruments(self) -> List[str]:
+        raw = await self._get("https://api.bitcastle.io/api/v2/public/exchange/ticker")
+        return [t.get('symbol') for t in raw.get('data', [])]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         raw = await self._get("https://api.bitcastle.io/api/v2/public/exchange/ticker")
         for t in raw.get('data', []):
@@ -249,6 +262,9 @@ class BitcastleAdapter(CustomCEXAdapter):
 
 class HibtAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('hibt', config)
+    async def get_instruments(self) -> List[str]:
+        raw = await self._get("https://api.hibt.com/api/v1/common/symbols")
+        return [t.get('symbol') for t in raw.get('data', [])]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         raw = await self._get(f"https://api.hibt.com/api/v1/market/ticker?symbol={symbol.replace('/', '_').upper()}")
         data = raw.get('data', {})
@@ -262,6 +278,9 @@ class SwissBorgAdapter(CustomCEXAdapter):
 
 class PionexAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('pionex', config)
+    async def get_instruments(self) -> List[str]:
+        raw = await self._get("https://api.pionex.com/api/v1/common/symbols")
+        return [t.get('symbol') for t in raw.get('data', {}).get('symbols', [])]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         raw = await self._get(f"https://api.pionex.com/api/v1/market/tickers?symbol={symbol.replace('/', '_').upper()}")
         data = raw.get('data', {}).get('tickers', [{}])[0]

@@ -67,6 +67,9 @@ class DEXAdapter(ExchangeInterface):
 
 class RaydiumAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('raydium', config)
+    async def get_instruments(self) -> List[str]:
+        data = await self._get("https://api.raydium.io/v2/main/pairs")
+        return [p.get('name') for p in data] if isinstance(data, list) else []
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.raydium.io/v2/main/pairs")
         price = 0
@@ -80,6 +83,9 @@ class RaydiumAdapter(DEXAdapter):
 
 class PumpSwapAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('pumpswap', config)
+    async def get_instruments(self) -> List[str]:
+        data = await self._get("https://frontend-api.pump.fun/coins/latest")
+        return [c.get('symbol') for c in data] if isinstance(data, list) else []
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://frontend-api.pump.fun/coins/latest")
         if isinstance(data, list):
@@ -92,6 +98,10 @@ class PumpSwapAdapter(DEXAdapter):
 
 class PancakeSwapAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('pancakeswap', config)
+    async def get_instruments(self) -> List[str]:
+        data = await self._get("https://api.pancakeswap.info/api/v2/tokens")
+        tokens = data.get('data', {})
+        return [t.get('symbol') for t in tokens.values()]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.pancakeswap.info/api/v2/tokens")
         tokens = data.get('data', {})
@@ -104,6 +114,10 @@ class PancakeSwapAdapter(DEXAdapter):
 
 class CetusAdapter(DEXAdapter):
     def __init__(self, config=None): super().__init__('cetus', config)
+    async def get_instruments(self) -> List[str]:
+        data = await self._get("https://api-sui.cetus.zone/v2/sui/pools_info")
+        pools = data.get('data', {}).get('pools', [])
+        return [p.get('symbol') for p in pools]
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api-sui.cetus.zone/v2/sui/pools_info")
         pools = data.get('data', {}).get('pools', [])

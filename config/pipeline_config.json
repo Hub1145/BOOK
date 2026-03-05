@@ -353,6 +353,50 @@
     "tsunamix": {
       "enabled": true,
       "rpc_url": "https://rpc.mantle.xyz"
+    },
+    "uniswap_v3": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "curve": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "balancer": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "dydx": {
+      "enabled": true,
+      "api_url": "https://api.dydx.exchange"
+    },
+    "1inch": {
+      "enabled": true,
+      "api_url": "https://api.1inch.io/v5.0/1"
+    },
+    "traderjoe": {
+      "enabled": true,
+      "rpc_url": "https://api.avax.network/ext/bc/C/rpc"
+    },
+    "quickswap": {
+      "enabled": true,
+      "rpc_url": "https://polygon-rpc.com"
+    },
+    "spookyswap": {
+      "enabled": true,
+      "rpc_url": "https://rpc.ftm.tools"
+    },
+    "serum": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "osmosis": {
+      "enabled": true,
+      "api_url": "https://api-osmosis.imperator.co"
+    },
+    "thorchain": {
+      "enabled": true,
+      "api_url": "https://thornode.thorchain.info"
     }
   },
   "symbols": [],
