@@ -200,55 +200,55 @@
     },
     "pumpswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "raydium": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "bisonfi": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "humidifi": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "pancakeswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://bsc-dataseed.binance.org/"
     },
     "aerodrome": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://base-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "cetus": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "turbos": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "thruster": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "aster": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://bsc-dataseed.binance.org/"
     },
     "merchantmoe": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.mantle.xyz"
     },
     "monoswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "baseswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://base-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
     },
     "sushiswap": {
       "enabled": true,
@@ -256,79 +256,79 @@
     },
     "orca": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "bex": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://artio.rpc.berachain.com"
     },
     "kuru": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc-devnet.monad.xyz"
     },
     "deepbook": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "letsbonk": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "heavendex": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "apiarist": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://artio.rpc.berachain.com"
     },
     "kintsu": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc-devnet.monad.xyz"
     },
     "fenix": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "blasterswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "bladeswap": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "hyperblast": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.blast.io"
     },
     "defituna": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "tessera": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "phoenix": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "lifinity": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
     "aftermath": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "kriya": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "bluemove": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
     },
     "milkroad": {
       "enabled": true,
@@ -340,7 +340,7 @@
     },
     "hyperion": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.hyperion.io"
     },
     "fluid": {
       "enabled": true,
@@ -348,11 +348,11 @@
     },
     "agni": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.mantle.xyz"
     },
     "tsunamix": {
       "enabled": true,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+      "rpc_url": "https://rpc.mantle.xyz"
     }
   },
   "symbols": [],

@@ -116,7 +116,9 @@ RESEARCH_DEX = [
     'turbos', 'thruster', 'aster', 'merchantmoe', 'monoswap', 'baseswap', 'sushiswap', 'orca',
     'bex', 'kuru', 'deepbook', 'letsbonk', 'heavendex', 'apiarist', 'kintsu', 'fenix',
     'blasterswap', 'bladeswap', 'hyperblast', 'defituna', 'tessera', 'phoenix', 'lifinity',
-    'aftermath', 'kriya', 'bluemove', 'milkroad', 'ecoportal', 'hyperion', 'fluid', 'agni', 'tsunamix'
+    'aftermath', 'kriya', 'bluemove', 'milkroad', 'ecoportal', 'hyperion', 'fluid', 'agni', 'tsunamix',
+    'uniswap_v3', 'curve', 'balancer', 'dydx', '1inch', 'traderjoe', 'quickswap', 'spookyswap',
+    'serum', 'osmosis', 'thorchain'
 ]
 
 DEX_ADAPTERS = {
