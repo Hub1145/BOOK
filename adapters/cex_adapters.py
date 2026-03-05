@@ -89,6 +89,11 @@ class CCXTAdapter(ExchangeInterface):
         except: return None
 
     async def get_instruments(self) -> List[str]:
+        if not self.exchange.symbols:
+            try:
+                await self.exchange.load_markets()
+            except:
+                return []
         return list(self.exchange.symbols) if self.exchange.symbols else []
 
     def _normalize_orderbook(self, orderbook: Dict, symbol: str) -> NormalizedOrderBook:
@@ -174,8 +179,11 @@ class CustomCEXAdapter(ExchangeInterface):
 class CoinWAdapter(CustomCEXAdapter):
     def __init__(self, config=None): super().__init__('coinw', config)
     async def get_instruments(self) -> List[str]:
-        data = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
-        return list(data.keys())
+        raw = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
+        data = raw.get('data', {})
+        if isinstance(data, dict):
+            return list(data.keys())
+        return []
     async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         data = await self._get("https://api.coinw.com/api/v1/public?command=returnTicker")
         raw = data.get(symbol.replace('/', '').upper(), {})

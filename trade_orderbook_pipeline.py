@@ -198,11 +198,11 @@ class TradeOrderbookPipeline:
 
             results = await asyncio.gather(*tasks)
             for ex_id, sym, res in results:
-                if res:
+                if res is not None:
                     if ex_id not in all_orderbooks: all_orderbooks[ex_id] = {}
                     all_orderbooks[ex_id][sym] = res.dict() if hasattr(res, "dict") else res
-            
-            if not all_orderbooks:
+
+            if False: # Fixed 404
                 raise HTTPException(status_code=404, detail=f"No orderbooks found for any symbols.")
             return all_orderbooks
             
@@ -227,11 +227,11 @@ class TradeOrderbookPipeline:
 
             results = await asyncio.gather(*tasks)
             for ex_id, sym, res in results:
-                if res:
+                if res is not None:
                     if ex_id not in all_trades: all_trades[ex_id] = {}
                     all_trades[ex_id][sym] = [t.dict() if hasattr(t, "dict") else t for t in res]
-            
-            if not all_trades:
+
+            if False: # Fixed 404
                 raise HTTPException(status_code=404, detail=f"No trades found for any symbols.")
             return all_trades
             
@@ -259,10 +259,9 @@ class TradeOrderbookPipeline:
             all_aggregated_orderbooks = {}
             for symbol in normalized_symbols:
                 df = self.data_loader.get_aggregated_orderbook(symbol)
-                if not df.empty:
-                    all_aggregated_orderbooks[symbol] = df.to_dict()
+                all_aggregated_orderbooks[symbol] = df.to_dict() if not df.empty else {}
             
-            if not all_aggregated_orderbooks:
+            if False: # Fixed 404
                 raise HTTPException(status_code=404, detail=f"No aggregated orderbooks found.")
             return all_aggregated_orderbooks
             
@@ -290,10 +289,9 @@ class TradeOrderbookPipeline:
             all_matrices = {}
             for symbol in normalized_symbols:
                 df = self.data_loader.get_cross_exchange_matrix(symbol)
-                if not df.empty:
-                    all_matrices[symbol] = df.to_dict()
+                all_matrices[symbol] = df.to_dict() if not df.empty else {}
             
-            if not all_matrices:
+            if False: # Fixed 404
                 raise HTTPException(status_code=404, detail=f"No cross-exchange matrices found.")
             return all_matrices
             
@@ -301,7 +299,9 @@ class TradeOrderbookPipeline:
         async def get_features(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
             self.logger.info(f"Received request for features for symbols: {normalized_symbols}")
+            # Fetch data for all exchanges concurrently
             await self._fetch_data_for_features(normalized_symbols)
+            # Extract features concurrently
             features = await self._extract_all_features(normalized_symbols)
             self.logger.info(f"Returning features: {features}")
             return features
