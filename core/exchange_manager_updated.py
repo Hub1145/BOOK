@@ -204,16 +204,21 @@ class ExchangeManager:
         return self.exchanges.get(exchange_id)
 
     async def get_all_instruments(self) -> Dict[str, List[str]]:
-        """Get all available instruments from all exchanges"""
+        """Get all available instruments from all exchanges concurrently"""
         instruments = {}
 
-        for exchange_id, exchange in self.exchanges.items():
+        async def fetch_inst(ex_id, ex_adapter):
             try:
-                exchange_instruments = await exchange.get_instruments()
-                instruments[exchange_id] = exchange_instruments
+                return ex_id, await ex_adapter.get_instruments()
             except Exception as e:
-                logger.error(f"Failed to get instruments from {exchange_id}: {e}")
-                instruments[exchange_id] = []
+                logger.error(f"Failed to get instruments from {ex_id}: {e}")
+                return ex_id, []
+
+        tasks = [fetch_inst(ex_id, ex) for ex_id, ex in self.exchanges.items()]
+        results = await asyncio.gather(*tasks)
+
+        for ex_id, inst in results:
+            instruments[ex_id] = inst
 
         return instruments
 

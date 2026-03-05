@@ -318,33 +318,37 @@ class TradeOrderbookPipeline:
             # all_features['features'] contains {source_id: {symbol: {features_dict}}}
             # all_features['feature_statistics'] contains {source_id: {symbol: {feature_stats_dict}}}
             
+            async def detect_one(sid, sym, feats_dict):
+                try:
+                    f_stats = all_features.get("feature_statistics", {}).get(sid, {}).get(sym, {})
+                    anom_res = await self.detection_system.detect_anomalies(feats_dict, feature_names=list(feats_dict.keys()))
+
+                    if self.config.get("output", {}).get("mode") == "full":
+                        write_unified_record(
+                            config=self.config,
+                            exchange=sid,
+                            symbol=sym,
+                            features=feats_dict,
+                            feature_stats=f_stats,
+                            detectors=anom_res.get("detectors", {}),
+                            meta_stats=anom_res.get("meta_statistics", {}),
+                            composite=anom_res.get("composite", {})
+                        )
+                    return sid, sym, anom_res
+                except Exception as e:
+                    self.logger.warning(f"Could not detect anomalies for {sym} from data source {sid}: {e}")
+                    return sid, sym, None
+
+            tasks = []
             for source_id, features_by_symbol in all_features.get("features", {}).items():
-                source_anomalies = {}
                 for symbol, features_dict in features_by_symbol.items():
-                    try:
-                        # Extract feature_stats for this specific symbol and source_id
-                        feature_stats_for_unified_record = all_features.get("feature_statistics", {}).get(source_id, {}).get(symbol, {})
-                        
-                        anomalies_result = await self.detection_system.detect_anomalies(features_dict, feature_names=list(features_dict.keys()))
-                        
-                        if self.config.get("output", {}).get("mode") == "full":
-                            write_unified_record(
-                                config=self.config,
-                                exchange=source_id,
-                                symbol=symbol,
-                                features=features_dict,
-                                feature_stats=feature_stats_for_unified_record,
-                                detectors=anomalies_result.get("detectors", {}),
-                                meta_stats=anomalies_result.get("meta_statistics", {}),
-                                composite=anomalies_result.get("composite", {})
-                            )
-                        
-                        if anomalies_result:
-                            source_anomalies[symbol] = anomalies_result
-                    except Exception as e:
-                        self.logger.warning(f"Could not detect anomalies for {symbol} from data source {source_id}: {e}")
-                if source_anomalies:
-                    all_anomalies[source_id] = source_anomalies
+                    tasks.append(detect_one(source_id, symbol, features_dict))
+
+            results = await asyncio.gather(*tasks)
+            for sid, sym, anom_res in results:
+                if anom_res:
+                    if sid not in all_anomalies: all_anomalies[sid] = {}
+                    all_anomalies[sid][sym] = anom_res
             
             if not all_anomalies:
                 raise HTTPException(status_code=404, detail=f"No anomalies found for any of the provided symbols from any data source.")
@@ -725,17 +729,27 @@ class TradeOrderbookPipeline:
         # Determine source_ids to iterate over (either configured exchanges or a generic GDrive source)
         source_ids_to_process = self.config.get('exchanges', {}) if self.config.get('exchanges') else ["gdrive_data_source"]
 
+        async def extract_one(sid, sym):
+            try:
+                feats, stats = await self._extract_features_for_single_exchange_symbol(sid, sym)
+                return sid, sym, feats, stats
+            except Exception as e:
+                self.logger.warning(f"Could not extract features for {sym} from data source {sid}: {e}")
+                return sid, sym, None, None
+
+        tasks = []
         for source_id in source_ids_to_process:
-            all_features_output["features"][source_id] = {}
-            all_features_output["feature_statistics"][source_id] = {}
             for symbol in symbols:
-                try:
-                    features, feature_stats = await self._extract_features_for_single_exchange_symbol(source_id, symbol)
-                    if features:
-                        all_features_output["features"][source_id][symbol] = features
-                        all_features_output["feature_statistics"][source_id][symbol] = feature_stats
-                except Exception as e:
-                    self.logger.warning(f"Could not extract features for {symbol} from data source {source_id}: {e}")
+                tasks.append(extract_one(source_id, symbol))
+
+        results = await asyncio.gather(*tasks)
+        for sid, sym, feats, stats in results:
+            if sid not in all_features_output["features"]:
+                all_features_output["features"][sid] = {}
+                all_features_output["feature_statistics"][sid] = {}
+            if feats:
+                all_features_output["features"][sid][sym] = feats
+                all_features_output["feature_statistics"][sid][sym] = stats
         
         # NEW: Extract pre-pump features if enabled
         if self.config.get('extractors', {}).get('pre_pump', {}).get('enabled', False):

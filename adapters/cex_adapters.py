@@ -299,20 +299,22 @@ RESEARCH_CEX = [
 ]
 
 CUSTOM_ADAPTER_MAP = {
-    'coinw': CoinWAdapter, 'bkex': BKEXAdapter, 'fameex': FameEXAdapter,
-    'weex': WEEXAdapter, 'coinstore': CoinstoreAdapter, 'bitunix': BitunixAdapter,
-    'wazirx': WazirXCustomAdapter, 'lmax': LMAXAdapter, 'bitcastle': BitcastleAdapter,
-    'hibt': HibtAdapter, 'swissborg': SwissBorgAdapter, 'pionex': PionexAdapter,
-    'korbit': type("KorbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('korbit', config)}),
-    'paribu': type("ParibuAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('paribu', config)}),
-    'buyucoin': type("BuyUcoinAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('buyucoin', config)}),
-    'inx': type("INXAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('inx', config)}),
-    'uphold': type("UpholdAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('uphold', config)}),
-    'egemoney': type("EgeMoneyAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('egemoney', config)}),
-    'btcc': type("BTCCAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('btcc', config)}),
-    'probit': type("ProbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('probit', config)}),
-    'tidex': type("TidexAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('tidex', config)}),
-    'azbit': type("AzbitAdapter", (CustomCEXAdapter,), {"__init__": lambda self, config=None: super(self.__class__, self).__init__('azbit', config)}),
+    'coinw': CoinWAdapter, 'fameex': FameEXAdapter, 'coinstore': CoinstoreAdapter,
+    'bitunix': BitunixAdapter, 'wazirx': WazirXCustomAdapter, 'lmax': LMAXAdapter,
+    'bitcastle': BitcastleAdapter, 'hibt': HibtAdapter, 'pionex': PionexAdapter,
+    'bkex': BKEXAdapter, 'weex': WEEXAdapter,
+    'korbit': type('KorbitAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('korbit', config)}),
+    'paribu': type('ParibuAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('paribu', config)}),
+    'buyucoin': type('BuyUcoinAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('buyucoin', config)}),
+    'inx': type('INXAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('inx', config)}),
+    'uphold': type('UpholdAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('uphold', config)}),
+    'btcc': type('BTCCAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('btcc', config)}),
+    'azbit': type('AzbitAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('azbit', config)}),
+    'tidex': type('TidexAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('tidex', config)}),
+    'zengo': type('ZengoAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('zengo', config)}),
+    'egemoney': type('EgeMoneyAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('egemoney', config)}),
+    'pionexus': type('PionexUSAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('pionexus', config)}),
+    'probit': type('ProbitAdapter', (CustomCEXAdapter,), {'__init__': lambda self, config=None: super(self.__class__, self).__init__('probit', config)}),
 }
 
 CEX_ADAPTERS = {}
