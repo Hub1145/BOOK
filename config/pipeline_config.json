@@ -1,141 +1,403 @@
 {
   "exchanges": {
+    "mexc": {
+      "enabled": true
+    },
+    "bybit": {
+      "enabled": true
+    },
+    "kucoin": {
+      "enabled": true
+    },
+    "poloniex": {
+      "enabled": true
+    },
+    "bitmart": {
+      "enabled": true
+    },
+    "lbank": {
+      "enabled": true
+    },
+    "xt": {
+      "enabled": true
+    },
+    "htx": {
+      "enabled": true
+    },
     "binance": {
+      "enabled": true
+    },
+    "okx": {
+      "enabled": true
+    },
+    "bitget": {
+      "enabled": true
+    },
+    "upbit": {
+      "enabled": true
+    },
+    "whitebit": {
+      "enabled": true
+    },
+    "bithumb": {
+      "enabled": true
+    },
+    "bullish": {
+      "enabled": true
+    },
+    "bitrue": {
+      "enabled": true
+    },
+    "ascendex": {
+      "enabled": true
+    },
+    "digifinex": {
+      "enabled": true
+    },
+    "coinw": {
+      "enabled": true
+    },
+    "p2b": {
+      "enabled": true
+    },
+    "bingx": {
+      "enabled": true
+    },
+    "kcex": {
+      "enabled": true
+    },
+    "bkex": {
+      "enabled": true
+    },
+    "fameex": {
+      "enabled": true
+    },
+    "weex": {
+      "enabled": true
+    },
+    "azbit": {
+      "enabled": true
+    },
+    "coinstore": {
+      "enabled": true
+    },
+    "toobit": {
+      "enabled": true
+    },
+    "bitunix": {
+      "enabled": true
+    },
+    "coinex": {
+      "enabled": true
+    },
+    "bitvavo": {
+      "enabled": true
+    },
+    "hitbtc": {
+      "enabled": true
+    },
+    "pionex": {
+      "enabled": true
+    },
+    "btcc": {
+      "enabled": true
+    },
+    "probit": {
+      "enabled": true
+    },
+    "tidex": {
+      "enabled": true
+    },
+    "wazirx": {
+      "enabled": true
+    },
+    "gateio": {
+      "enabled": true
+    },
+    "mercado": {
+      "enabled": true
+    },
+    "bitopro": {
+      "enabled": true
+    },
+    "paymium": {
+      "enabled": true
+    },
+    "phemex": {
+      "enabled": true
+    },
+    "korbit": {
+      "enabled": true
+    },
+    "bitflyer": {
+      "enabled": true
+    },
+    "coincheck": {
+      "enabled": true
+    },
+    "lmax": {
+      "enabled": true
+    },
+    "gemini": {
+      "enabled": true
+    },
+    "cryptocom": {
+      "enabled": true
+    },
+    "bitstamp": {
+      "enabled": true
+    },
+    "kraken": {
+      "enabled": true
+    },
+    "coinbase": {
+      "enabled": true
+    },
+    "paribu": {
+      "enabled": true
+    },
+    "bitcastle": {
+      "enabled": true
+    },
+    "blofin": {
+      "enabled": true
+    },
+    "hibt": {
+      "enabled": true
+    },
+    "zengo": {
+      "enabled": true
+    },
+    "uphold": {
+      "enabled": true
+    },
+    "pionexus": {
+      "enabled": true
+    },
+    "swissborg": {
+      "enabled": true
+    },
+    "egemoney": {
+      "enabled": true
+    },
+    "bydfi": {
+      "enabled": true
+    },
+    "inx": {
+      "enabled": true
+    },
+    "coinmate": {
+      "enabled": true
+    },
+    "buyucoin": {
+      "enabled": true
+    },
+    "ueex": {
+      "enabled": true
+    },
+    "bika": {
+      "enabled": true
+    },
+    "pumpswap": {
       "enabled": true,
-      "api_key": "oPnlEIqO8RAerS6JzVZnlc4YEglkJxn6fASRiTb7UgzTwThOtbTUASvdCS9WWJkf",
-      "secret": "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1iRG7Le6HiYWkqoWhKFQkrx3FeIM3DUARSR0HzM376UgyWQBS268uwNMwkugeiYqk",
-      "testnet": true,
-      "rate_limit": 50
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
-    "ace": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "alpaca": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "ascendex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bequant": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bigone": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "binancecoinm": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "binanceus": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "binanceusdm": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bingx": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bit2c": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitbank": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitbns": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitcoincom": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitfinex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitfinex2": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitflyer": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitget": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "bithumb": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitmart": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "bitmex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "options": { "defaultType": "swap" }, "testnet": false, "rate_limit": 50 },
-    "bitopro": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitpanda": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitrue": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitso": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitstamp": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitteam": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bitvavo": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bl3p": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "blockchaincom": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "blofin": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "btcalpha": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "btcbox": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "btcmarkets": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "btcturk": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "bybit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "cex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinbase": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinbaseadvanced": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinbaseexchange": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinbaseinternational": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coincatch": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coincheck": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "coinlist": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinmate": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinmetro": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinone": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinsph": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "coinspot": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "cryptocom": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "currencycom": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "delta": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "deribit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "digifinex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "exmo": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "fmfwio": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "gate": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "gateio": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "gemini": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "hashkey": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "hitbtc": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "hollaex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "htx": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "huobi": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "huobijp": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "hyperliquid": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "idex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "independentreserve": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "indodax": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "kraken": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "krakenfutures": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "kucoin": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "kucoinfutures": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "kuna": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "latoken": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "lbank": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "luno": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "lykke": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "mercado": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "mexc": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "ndax": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "novadax": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "oceanex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "okcoin": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "okx": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "passphrase": "YOUR_PASSPHRASE", "testnet": false, "rate_limit": 50 },
-    "onetrading": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "oxfun": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "p2b": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "paradex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "paymium": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "phemex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "poloniex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "poloniexfutures": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "probit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "timex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "tokocrypto": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "tradeogre": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "upbit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "vertex": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "wavesexchange": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "wazirx": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "whitebit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "woo": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "woofipro": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "xt": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "yobit": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "zaif": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "zonda": { "enabled": false, "api_key": "YOUR_API_KEY", "secret": "YOUR_SECRET", "testnet": false, "rate_limit": 50 },
-    "uniswap_v2": {
-      "enabled": false,
-      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY",
-      "ws_url": "wss://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY",
-      "graph_url": "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
+    "raydium": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
     },
-    "uniswap_v3": { "enabled": false, "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY" },
-    "sushiswap": { "enabled": false, "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY" },
-    "pancakeswap": { "enabled": false, "rpc_url": "https://bsc-dataseed.binance.org/" },
-    "curve": { "enabled": false, "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY" },
-    "balancer": { "enabled": false, "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY" },
-    "dydx": { "enabled": false, "api_url": "https://api.dydx.exchange" },
-    "1inch": { "enabled": false, "api_url": "https://api.1inch.io/v5.0/1" },
-    "traderjoe": { "enabled": false, "rpc_url": "https://api.avax.network/ext/bc/C/rpc" },
-    "quickswap": { "enabled": false, "rpc_url": "https://polygon-rpc.com" },
-    "spookyswap": { "enabled": false, "rpc_url": "https://rpc.ftm.tools" },
-    "raydium": { "enabled": false, "rpc_url": "https://api.mainnet-beta.solana.com" },
-    "orca": { "enabled": false, "rpc_url": "https://api.mainnet-beta.solana.com" },
-    "serum": { "enabled": false, "rpc_url": "https://api.mainnet-beta.solana.com" },
-    "osmosis": { "enabled": false, "api_url": "https://api-osmosis.imperator.co" },
-    "thorchain": { "enabled": false, "api_url": "https://thornode.thorchain.info" }
+    "bisonfi": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "humidifi": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "pancakeswap": {
+      "enabled": true,
+      "rpc_url": "https://bsc-dataseed.binance.org/"
+    },
+    "aerodrome": {
+      "enabled": true,
+      "rpc_url": "https://base-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "cetus": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "turbos": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "thruster": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "aster": {
+      "enabled": true,
+      "rpc_url": "https://bsc-dataseed.binance.org/"
+    },
+    "merchantmoe": {
+      "enabled": true,
+      "rpc_url": "https://rpc.mantle.xyz"
+    },
+    "monoswap": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "baseswap": {
+      "enabled": true,
+      "rpc_url": "https://base-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "sushiswap": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "orca": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "bex": {
+      "enabled": true,
+      "rpc_url": "https://artio.rpc.berachain.com"
+    },
+    "kuru": {
+      "enabled": true,
+      "rpc_url": "https://rpc-devnet.monad.xyz"
+    },
+    "deepbook": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "letsbonk": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "heavendex": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "apiarist": {
+      "enabled": true,
+      "rpc_url": "https://artio.rpc.berachain.com"
+    },
+    "kintsu": {
+      "enabled": true,
+      "rpc_url": "https://rpc-devnet.monad.xyz"
+    },
+    "fenix": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "blasterswap": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "bladeswap": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "hyperblast": {
+      "enabled": true,
+      "rpc_url": "https://rpc.blast.io"
+    },
+    "defituna": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "tessera": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "phoenix": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "lifinity": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "aftermath": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "kriya": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "bluemove": {
+      "enabled": true,
+      "rpc_url": "https://fullnode.mainnet.sui.io:443"
+    },
+    "milkroad": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "ecoportal": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "hyperion": {
+      "enabled": true,
+      "rpc_url": "https://rpc.hyperion.io"
+    },
+    "fluid": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "agni": {
+      "enabled": true,
+      "rpc_url": "https://rpc.mantle.xyz"
+    },
+    "tsunamix": {
+      "enabled": true,
+      "rpc_url": "https://rpc.mantle.xyz"
+    },
+    "uniswap_v3": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "curve": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "balancer": {
+      "enabled": true,
+      "rpc_url": "https://eth-mainnet.g.alchemy.com/v2/shr6OFvXoi_-eDou3Prpl"
+    },
+    "dydx": {
+      "enabled": true,
+      "api_url": "https://api.dydx.exchange"
+    },
+    "1inch": {
+      "enabled": true,
+      "api_url": "https://api.1inch.io/v5.0/1"
+    },
+    "traderjoe": {
+      "enabled": true,
+      "rpc_url": "https://api.avax.network/ext/bc/C/rpc"
+    },
+    "quickswap": {
+      "enabled": true,
+      "rpc_url": "https://polygon-rpc.com"
+    },
+    "spookyswap": {
+      "enabled": true,
+      "rpc_url": "https://rpc.ftm.tools"
+    },
+    "serum": {
+      "enabled": true,
+      "rpc_url": "https://api.mainnet-beta.solana.com"
+    },
+    "osmosis": {
+      "enabled": true,
+      "api_url": "https://api-osmosis.imperator.co"
+    },
+    "thorchain": {
+      "enabled": true,
+      "api_url": "https://thornode.thorchain.info"
+    }
   },
   "symbols": [],
   "data_loader": {
@@ -147,22 +409,60 @@
   },
   "extractors": {
     "cryptofeed": {
-      "depth_levels": [1, 5, 10, 20, 50],
-      "volume_buckets": [0.1, 0.5, 1.0, 5.0, 10.0]
+      "depth_levels": [
+        1,
+        5,
+        10,
+        20,
+        50
+      ],
+      "volume_buckets": [
+        0.1,
+        0.5,
+        1.0,
+        5.0,
+        10.0
+      ]
     },
     "tradebook": {
-      "windows": [10, 50, 100, 500],
-      "volume_buckets": [0.1, 1.0, 10.0, 100.0]
+      "windows": [
+        10,
+        50,
+        100,
+        500
+      ],
+      "volume_buckets": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ]
     },
     "technical": {
-      "periods": [5, 10, 20, 50, 100]
+      "periods": [
+        5,
+        10,
+        20,
+        50,
+        100
+      ]
     },
     "dex": {
-      "slippage_amounts": [100, 1000, 10000, 100000],
+      "slippage_amounts": [
+        100,
+        1000,
+        10000,
+        100000
+      ],
       "pool_fee": 0.003
     },
     "futures": {
-      "lookback_periods": [8, 24, 72, 168]
+      "lookback_periods": [
+        8,
+        24,
+        72,
+        168
+      ]
     },
     "cross_exchange": {
       "lookback_window": 300
@@ -170,8 +470,19 @@
     "options": {
       "risk_free_rate": 0.05,
       "dividend_yield": 0.0,
-      "windows": [10, 50, 100, 500],
-      "depth_levels": [1, 5, 10, 20, 50]
+      "windows": [
+        10,
+        50,
+        100,
+        500
+      ],
+      "depth_levels": [
+        1,
+        5,
+        10,
+        20,
+        50
+      ]
     },
     "pre_pump": {
       "enabled": true,
@@ -180,7 +491,7 @@
       "short_horizon": "30s",
       "long_horizon": "10min",
       "lookahead_n": 60,
-      "pump_return_thresh": 0.10,
+      "pump_return_thresh": 0.1,
       "pre_pump_start_offset": 30,
       "pre_pump_end_offset": 5
     }

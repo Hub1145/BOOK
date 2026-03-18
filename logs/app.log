@@ -1,0 +1,108 @@
+2026-03-03 13:15:27 INFO     [core.logging_config] Logging initialized - Level: DEBUG, Format: standard, File logging: enabled
+2026-03-03 13:15:27 INFO     [__main__] Initializing Trade & Orderbook Pipeline...
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: mexc
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bybit
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: kucoin
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: poloniex
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitmart
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: lbank
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: xt
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: htx
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: binance
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: okx
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitget
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: upbit
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: whitebit
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bithumb
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bullish
+2026-03-03 13:15:27 WARNING  [core.exchange_manager_updated] Exchange bitrue_custom is enabled but no adapter found or module not available.
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: ascendex
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: digifinex
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: coinw
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: p2b
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bingx
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: toobit
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: coinex
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitvavo
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: hitbtc
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: gateio
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: mercado
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitopro
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: paymium
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: phemex
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitflyer
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: coincheck
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: gemini
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: cryptocom
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bitstamp
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: kraken
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: coinbase
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: blofin
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: bydfi
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: coinmate
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: wazirx
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: raydium
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: pancakeswap
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: uniswap_v3
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: sushiswap
+2026-03-03 13:15:27 INFO     [core.exchange_manager_updated] Registered exchange: aerodrome
+2026-03-03 13:15:27 INFO     [core.data_loader] Data loader initialized
+2026-03-03 13:15:27 INFO     [__main__] Trade & Orderbook Pipeline v2 started with 45 exchanges
+2026-03-03 13:15:27 INFO     [__main__] All exchange adapters loaded - CEX and DEX support available
+2026-03-03 13:15:27 INFO     [__main__] Backtesting support available
+2026-03-03 13:15:27 INFO     [__main__] Options analytics support enabled
+2026-03-03 13:15:29 INFO     [__main__] Shutting down...
+2026-03-03 13:16:45 INFO     [core.logging_config] Logging initialized - Level: DEBUG, Format: standard, File logging: enabled
+2026-03-03 13:16:45 INFO     [__main__] Initializing Trade & Orderbook Pipeline...
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: mexc
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bybit
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: kucoin
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: poloniex
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitmart
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: lbank
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: xt
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: htx
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: binance
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: okx
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitget
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: upbit
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: whitebit
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bithumb
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bullish
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: ascendex
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: digifinex
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: coinw
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: p2b
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bingx
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: toobit
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: coinex
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitvavo
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: hitbtc
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: gateio
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: mercado
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitopro
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: paymium
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: phemex
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitflyer
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: coincheck
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: gemini
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: cryptocom
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitstamp
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: kraken
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: coinbase
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: blofin
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bydfi
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: coinmate
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: wazirx
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: raydium
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: pancakeswap
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: uniswap_v3
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: sushiswap
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: aerodrome
+2026-03-03 13:16:45 INFO     [core.exchange_manager_updated] Registered exchange: bitrue
+2026-03-03 13:16:45 INFO     [core.data_loader] Data loader initialized
+2026-03-03 13:16:45 INFO     [__main__] Trade & Orderbook Pipeline v2 started with 46 exchanges
+2026-03-03 13:16:45 INFO     [__main__] All exchange adapters loaded - CEX and DEX support available
+2026-03-03 13:16:45 INFO     [__main__] Backtesting support available
+2026-03-03 13:16:45 INFO     [__main__] Options analytics support enabled
+2026-03-03 13:16:45 INFO     [__main__] Shutting down...

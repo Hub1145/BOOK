@@ -5,7 +5,7 @@ from scipy.stats import skew, kurtosis
 from typing import Dict, Any, List
 
 def write_unified_record(
-    config: Any, # Change type hint to Any, as it's a BacktestConfig object
+    config: Any, # Can be a dict (live) or object (backtest)
     exchange: str,
     symbol: str,
     features: Dict[str, Any],
@@ -15,7 +15,13 @@ def write_unified_record(
     composite: Dict[str, Any]
 ) -> Dict[str, Any]:
     """Write one unified JSONL row combining features and anomalies."""
-    output_dir = config.output.get("output_directory", "./outputs") # Access output dictionary correctly
+    # Handle both object-based config and dict-based config
+    if isinstance(config, dict):
+        output_config = config.get("output", {})
+    else:
+        output_config = getattr(config, "output", {})
+
+    output_dir = output_config.get("output_directory", "./outputs")
     os.makedirs(output_dir, exist_ok=True)
     filename = os.path.join(output_dir, f"unified_{datetime.utcnow().date().isoformat()}.jsonl")
     

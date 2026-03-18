@@ -1,0 +1,108 @@
+2026-03-03 13:15:27.486 INFO     [core.logging_config:init_logging:250] Logging initialized - Level: DEBUG, Format: standard, File logging: enabled
+2026-03-03 13:15:27.487 INFO     [__main__:__init__:84] Initializing Trade & Orderbook Pipeline...
+2026-03-03 13:15:27.609 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: mexc
+2026-03-03 13:15:27.619 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bybit
+2026-03-03 13:15:27.627 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: kucoin
+2026-03-03 13:15:27.634 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: poloniex
+2026-03-03 13:15:27.641 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitmart
+2026-03-03 13:15:27.647 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: lbank
+2026-03-03 13:15:27.654 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: xt
+2026-03-03 13:15:27.666 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: htx
+2026-03-03 13:15:27.680 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: binance
+2026-03-03 13:15:27.690 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: okx
+2026-03-03 13:15:27.703 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitget
+2026-03-03 13:15:27.708 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: upbit
+2026-03-03 13:15:27.714 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: whitebit
+2026-03-03 13:15:27.719 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bithumb
+2026-03-03 13:15:27.725 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bullish
+2026-03-03 13:15:27.725 WARNING  [core.exchange_manager_updated:auto_register_exchanges:79] Exchange bitrue_custom is enabled but no adapter found or module not available.
+2026-03-03 13:15:27.731 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: ascendex
+2026-03-03 13:15:27.737 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: digifinex
+2026-03-03 13:15:27.738 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinw
+2026-03-03 13:15:27.742 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: p2b
+2026-03-03 13:15:27.750 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bingx
+2026-03-03 13:15:27.755 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: toobit
+2026-03-03 13:15:27.763 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinex
+2026-03-03 13:15:27.768 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitvavo
+2026-03-03 13:15:27.774 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: hitbtc
+2026-03-03 13:15:27.784 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: gateio
+2026-03-03 13:15:27.789 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: mercado
+2026-03-03 13:15:27.794 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitopro
+2026-03-03 13:15:27.799 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: paymium
+2026-03-03 13:15:27.806 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: phemex
+2026-03-03 13:15:27.812 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitflyer
+2026-03-03 13:15:27.817 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coincheck
+2026-03-03 13:15:27.823 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: gemini
+2026-03-03 13:15:27.830 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: cryptocom
+2026-03-03 13:15:27.840 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitstamp
+2026-03-03 13:15:27.845 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: kraken
+2026-03-03 13:15:27.852 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinbase
+2026-03-03 13:15:27.858 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: blofin
+2026-03-03 13:15:27.863 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bydfi
+2026-03-03 13:15:27.868 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinmate
+2026-03-03 13:15:27.869 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: wazirx
+2026-03-03 13:15:27.869 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: raydium
+2026-03-03 13:15:27.869 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: pancakeswap
+2026-03-03 13:15:27.869 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: uniswap_v3
+2026-03-03 13:15:27.870 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: sushiswap
+2026-03-03 13:15:27.870 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: aerodrome
+2026-03-03 13:15:27.870 INFO     [core.data_loader:initialize:84] Data loader initialized
+2026-03-03 13:15:27.871 INFO     [__main__:start:886] Trade & Orderbook Pipeline v2 started with 45 exchanges
+2026-03-03 13:15:27.871 INFO     [__main__:start:891] All exchange adapters loaded - CEX and DEX support available
+2026-03-03 13:15:27.871 INFO     [__main__:start:892] Backtesting support available
+2026-03-03 13:15:27.871 INFO     [__main__:start:893] Options analytics support enabled
+2026-03-03 13:15:29.926 INFO     [__main__:signal_handler:944] Shutting down...
+2026-03-03 13:16:45.218 INFO     [core.logging_config:init_logging:250] Logging initialized - Level: DEBUG, Format: standard, File logging: enabled
+2026-03-03 13:16:45.218 INFO     [__main__:__init__:84] Initializing Trade & Orderbook Pipeline...
+2026-03-03 13:16:45.313 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: mexc
+2026-03-03 13:16:45.322 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bybit
+2026-03-03 13:16:45.330 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: kucoin
+2026-03-03 13:16:45.336 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: poloniex
+2026-03-03 13:16:45.343 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitmart
+2026-03-03 13:16:45.348 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: lbank
+2026-03-03 13:16:45.355 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: xt
+2026-03-03 13:16:45.367 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: htx
+2026-03-03 13:16:45.380 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: binance
+2026-03-03 13:16:45.390 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: okx
+2026-03-03 13:16:45.402 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitget
+2026-03-03 13:16:45.407 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: upbit
+2026-03-03 13:16:45.413 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: whitebit
+2026-03-03 13:16:45.418 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bithumb
+2026-03-03 13:16:45.424 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bullish
+2026-03-03 13:16:45.430 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: ascendex
+2026-03-03 13:16:45.436 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: digifinex
+2026-03-03 13:16:45.436 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinw
+2026-03-03 13:16:45.441 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: p2b
+2026-03-03 13:16:45.448 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bingx
+2026-03-03 13:16:45.453 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: toobit
+2026-03-03 13:16:45.461 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinex
+2026-03-03 13:16:45.467 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitvavo
+2026-03-03 13:16:45.474 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: hitbtc
+2026-03-03 13:16:45.483 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: gateio
+2026-03-03 13:16:45.488 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: mercado
+2026-03-03 13:16:45.493 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitopro
+2026-03-03 13:16:45.498 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: paymium
+2026-03-03 13:16:45.504 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: phemex
+2026-03-03 13:16:45.509 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitflyer
+2026-03-03 13:16:45.514 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coincheck
+2026-03-03 13:16:45.519 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: gemini
+2026-03-03 13:16:45.526 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: cryptocom
+2026-03-03 13:16:45.533 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitstamp
+2026-03-03 13:16:45.538 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: kraken
+2026-03-03 13:16:45.544 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinbase
+2026-03-03 13:16:45.550 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: blofin
+2026-03-03 13:16:45.555 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bydfi
+2026-03-03 13:16:45.560 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: coinmate
+2026-03-03 13:16:45.560 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: wazirx
+2026-03-03 13:16:45.560 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: raydium
+2026-03-03 13:16:45.561 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: pancakeswap
+2026-03-03 13:16:45.561 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: uniswap_v3
+2026-03-03 13:16:45.561 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: sushiswap
+2026-03-03 13:16:45.561 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: aerodrome
+2026-03-03 13:16:45.567 INFO     [core.exchange_manager_updated:register_exchange:40] Registered exchange: bitrue
+2026-03-03 13:16:45.568 INFO     [core.data_loader:initialize:84] Data loader initialized
+2026-03-03 13:16:45.568 INFO     [__main__:start:886] Trade & Orderbook Pipeline v2 started with 46 exchanges
+2026-03-03 13:16:45.568 INFO     [__main__:start:891] All exchange adapters loaded - CEX and DEX support available
+2026-03-03 13:16:45.568 INFO     [__main__:start:892] Backtesting support available
+2026-03-03 13:16:45.568 INFO     [__main__:start:893] Options analytics support enabled
+2026-03-03 13:16:45.800 INFO     [__main__:signal_handler:944] Shutting down...

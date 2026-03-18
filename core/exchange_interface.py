@@ -15,8 +15,8 @@ class OrderBookLevel:
     """Single level in an orderbook"""
     price: float
     volume: float
-    
-    
+
+
 @dataclass
 class NormalizedOrderBook:
     """Normalized orderbook across all exchanges"""
@@ -26,7 +26,7 @@ class NormalizedOrderBook:
     bids: List[OrderBookLevel]
     asks: List[OrderBookLevel]
     sequence: int = 0
-    
+
     def dict(self) -> Dict[str, Any]:
         return {
             'exchange': self.exchange,
@@ -50,7 +50,7 @@ class NormalizedTrade:
     volume: float
     side: str  # 'buy' or 'sell'
     taker_side: str
-    
+
     def dict(self) -> Dict[str, Any]:
         return {
             'exchange': self.exchange,
@@ -80,7 +80,7 @@ class NormalizedTicker:
     vwap_24h: Optional[float] = None
     open_interest: Optional[float] = None
     funding_rate: Optional[float] = None
-    
+
     def dict(self) -> Dict[str, Any]:
         return {k: v for k, v in self.__dict__.items() if v is not None}
 
@@ -88,7 +88,7 @@ class NormalizedTicker:
 
 class ExchangeInterface(ABC):
     """Abstract base class for all exchange adapters"""
-    
+
     def __init__(self, exchange_id: str, config: Optional[Dict[str, Any]] = None):
         self.exchange_id = exchange_id
         self.config = config or {}
@@ -103,41 +103,41 @@ class ExchangeInterface(ABC):
             'trade': [],
             'ticker': []
         }
-        
+
     @abstractmethod
     async def connect(self) -> None:
         """Connect to the exchange"""
         pass
-        
+
     @abstractmethod
     async def disconnect(self) -> None:
         """Disconnect from the exchange"""
         pass
 
     @abstractmethod
-    async def fetch_order_book(self, symbol: str) -> Dict:
+    async def fetch_order_book(self, symbol: str) -> NormalizedOrderBook:
         """Fetch orderbook data for a symbol."""
         pass
 
     @abstractmethod
-    async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[Dict]:
+    async def fetch_trades(self, symbol: str, limit: Optional[int] = None) -> List[NormalizedTrade]:
         """Fetch trade data for a symbol."""
         pass
 
     @abstractmethod
-    async def fetch_ticker(self, symbol: str) -> Dict:
+    async def fetch_ticker(self, symbol: str) -> NormalizedTicker:
         """Fetch ticker data for a symbol."""
         pass
-            
+
     def add_callback(self, event_type: str, callback: Callable) -> None:
         """Add a callback for an event type"""
         if event_type in self.callbacks:
             self.callbacks[event_type].append(callback)
-            
+
     def is_connected(self) -> bool:
         """Check if exchange is connected"""
         return self.connected
-        
+
     async def get_instruments(self) -> List[str]:
         """Get list of available instruments (optional)"""
         return []

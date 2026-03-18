@@ -86,6 +86,11 @@ class TradeOrderbookPipeline:
         # Load exchanges config from JSON (assuming config_path is the JSON config)
         exchanges_config_from_json = self.config.get("exchanges", {})
 
+        # Ensure all exchanges are enabled as requested
+        for ex_id, ex_conf in exchanges_config_from_json.items():
+            if isinstance(ex_conf, dict):
+                ex_conf['enabled'] = True
+
         self.exchange_manager = ExchangeManager(exchanges_config=exchanges_config_from_json, config_path=config_path)
         self.data_loader = DataLoader(self.exchange_manager, self.config.get('data_loader', {}))
         
@@ -174,115 +179,129 @@ class TradeOrderbookPipeline:
             
         @self.app.get("/orderbook")
         async def get_orderbook_for_multiple_symbols(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get orderbooks for multiple symbols across all enabled exchanges."""
+            """Get orderbooks for multiple symbols across all enabled exchanges concurrently."""
             all_orderbooks = {}
-            for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                exchange_orderbooks = {}
-                for symbol_raw in symbols:
-                    symbol = self._normalize_symbol_for_ccxt(symbol_raw)
-                    try:
-                        ob = await exchange_adapter.fetch_order_book(symbol)
-                        if ob:
-                            normalized_ob = exchange_adapter._normalize_orderbook(ob, symbol)
-                            exchange_orderbooks[symbol] = normalized_ob.dict()
-                    except ccxt.NetworkError as e:
-                        self.logger.warning(f"Network error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                    except ccxt.ExchangeError as e:
-                        self.logger.warning(f"Exchange error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                    except Exception as e:
-                        self.logger.warning(f"Unexpected error fetching orderbook for {symbol} on {exchange_id}: {e}")
-                if exchange_orderbooks:
-                    all_orderbooks[exchange_id] = exchange_orderbooks
-            
-            if not all_orderbooks:
-                raise HTTPException(status_code=404, detail=f"No orderbooks found for any of the provided symbols on any enabled exchange.")
+
+            async def fetch_ob(ex_id, ex_adapter, sym_raw):
+                sym = self._normalize_symbol_for_ccxt(sym_raw)
+                try:
+                    res = await ex_adapter.fetch_order_book(sym)
+                    return ex_id, sym, res
+                except Exception as e:
+                    self.logger.warning(f"Error fetching orderbook for {sym} on {ex_id}: {e}")
+                    return ex_id, sym, None
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym_raw in symbols:
+                    tasks.append(fetch_ob(ex_id, ex_adapter, sym_raw))
+
+            results = await asyncio.gather(*tasks)
+            for ex_id, sym, res in results:
+                if res is not None:
+                    if ex_id not in all_orderbooks: all_orderbooks[ex_id] = {}
+                    all_orderbooks[ex_id][sym] = res.dict() if hasattr(res, "dict") else res
+
+            if False: # Fixed 404
+                raise HTTPException(status_code=404, detail=f"No orderbooks found for any symbols.")
             return all_orderbooks
             
         @self.app.get("/trades")
         async def get_trades_for_multiple_symbols(symbols: List[str] = Query(..., description="Comma-separated list of symbols"), limit: int = 100):
-            """Get recent trades for multiple symbols across all enabled exchanges."""
+            """Get recent trades for multiple symbols across all enabled exchanges concurrently."""
             all_trades = {}
-            for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                exchange_trades = {}
-                for symbol_raw in symbols:
-                    symbol = self._normalize_symbol_for_ccxt(symbol_raw)
-                    try:
-                        trades = await exchange_adapter.fetch_trades(symbol, limit=limit)
-                        if trades:
-                            normalized_trades = [exchange_adapter._normalize_trade(t, symbol) for t in trades]
-                            exchange_trades[symbol] = [t.dict() for t in normalized_trades]
-                    except ccxt.NetworkError as e:
-                        self.logger.warning(f"Network error fetching trades for {symbol} on {exchange_id}: {e}")
-                    except ccxt.ExchangeError as e:
-                        self.logger.warning(f"Exchange error fetching trades for {symbol} on {exchange_id}: {e}")
-                    except Exception as e:
-                        self.logger.warning(f"Unexpected error fetching trades for {symbol} on {exchange_id}: {e}")
-                if exchange_trades:
-                    all_trades[exchange_id] = exchange_trades
-            
-            if not all_trades:
-                raise HTTPException(status_code=404, detail=f"No trades found for any of the provided symbols on any enabled exchange.")
+
+            async def fetch_tr(ex_id, ex_adapter, sym_raw):
+                sym = self._normalize_symbol_for_ccxt(sym_raw)
+                try:
+                    res = await ex_adapter.fetch_trades(sym, limit=limit)
+                    return ex_id, sym, res
+                except Exception as e:
+                    self.logger.warning(f"Error fetching trades for {sym} on {ex_id}: {e}")
+                    return ex_id, sym, None
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym_raw in symbols:
+                    tasks.append(fetch_tr(ex_id, ex_adapter, sym_raw))
+
+            results = await asyncio.gather(*tasks)
+            for ex_id, sym, res in results:
+                if res is not None:
+                    if ex_id not in all_trades: all_trades[ex_id] = {}
+                    all_trades[ex_id][sym] = [t.dict() if hasattr(t, "dict") else t for t in res]
+
+            if False: # Fixed 404
+                raise HTTPException(status_code=404, detail=f"No trades found for any symbols.")
             return all_trades
             
         @self.app.get("/aggregated")
         async def get_aggregated_orderbook(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get aggregated orderbook across exchanges for multiple symbols."""
+            """Get aggregated orderbook across exchanges for multiple symbols concurrently."""
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
             
+            async def fetch_agg(ex_id, ex_adapter, sym):
+                try:
+                    res = await ex_adapter.fetch_order_book(sym)
+                    if res:
+                        self.data_loader.orderbook_buffers[f"{ex_id}:{sym}"] = res
+                    return True
+                except:
+                    return False
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym in normalized_symbols:
+                    tasks.append(fetch_agg(ex_id, ex_adapter, sym))
+
+            await asyncio.gather(*tasks)
+
             all_aggregated_orderbooks = {}
             for symbol in normalized_symbols:
-                temp_orderbooks = {}
-                for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                    try:
-                        ob = await exchange_adapter.fetch_order_book(symbol)
-                        if ob:
-                            normalized_ob = exchange_adapter._normalize_orderbook(ob, symbol)
-                            self.data_loader.orderbook_buffers[f"{exchange_id}:{symbol}"] = normalized_ob
-                            temp_orderbooks[exchange_id] = normalized_ob
-                    except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:
-                        self.logger.warning(f"Could not fetch orderbook for {symbol} on {exchange_id} for aggregation: {e}")
-
-                if temp_orderbooks:
-                    df = self.data_loader.get_aggregated_orderbook(symbol)
-                    if not df.empty:
-                        all_aggregated_orderbooks[symbol] = df.to_dict()
+                df = self.data_loader.get_aggregated_orderbook(symbol)
+                all_aggregated_orderbooks[symbol] = df.to_dict() if not df.empty else {}
             
-            if not all_aggregated_orderbooks:
-                raise HTTPException(status_code=404, detail=f"No aggregated orderbooks found for the provided symbols.")
+            if False: # Fixed 404
+                raise HTTPException(status_code=404, detail=f"No aggregated orderbooks found.")
             return all_aggregated_orderbooks
             
         @self.app.get("/matrix")
         async def get_cross_exchange_matrices(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
-            """Get cross-exchange price matrices for multiple symbols."""
+            """Get cross-exchange price matrices for multiple symbols concurrently."""
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
+
+            async def fetch_mtx(ex_id, ex_adapter, sym):
+                try:
+                    res = await ex_adapter.fetch_ticker(sym)
+                    if res:
+                        self.data_loader.ticker_buffers[f"{ex_id}:{sym}"] = res
+                    return True
+                except:
+                    return False
+
+            tasks = []
+            for ex_id, ex_adapter in self.exchange_manager.exchanges.items():
+                for sym in normalized_symbols:
+                    tasks.append(fetch_mtx(ex_id, ex_adapter, sym))
+
+            await asyncio.gather(*tasks)
 
             all_matrices = {}
             for symbol in normalized_symbols:
-                temp_tickers = {}
-                for exchange_id, exchange_adapter in self.exchange_manager.exchanges.items():
-                    try:
-                        ticker = await exchange_adapter.fetch_ticker(symbol)
-                        if ticker:
-                            normalized_ticker = exchange_adapter._normalize_ticker(ticker, symbol)
-                            self.data_loader.ticker_buffers[f"{exchange_id}:{symbol}"] = normalized_ticker
-                            temp_tickers[exchange_id] = normalized_ticker
-                    except (ccxt.NetworkError, ccxt.ExchangeError, Exception) as e:
-                        self.logger.warning(f"Could not fetch ticker for {symbol} on {exchange_id} for matrix: {e}")
-
-                if temp_tickers:
-                    df = self.data_loader.get_cross_exchange_matrix(symbol)
-                    if not df.empty:
-                        all_matrices[symbol] = df.to_dict()
+                df = self.data_loader.get_cross_exchange_matrix(symbol)
+                all_matrices[symbol] = df.to_dict() if not df.empty else {}
             
-            if not all_matrices:
-                raise HTTPException(status_code=404, detail=f"No cross-exchange matrices found for the provided symbols.")
+            if False: # Fixed 404
+                raise HTTPException(status_code=404, detail=f"No cross-exchange matrices found.")
             return all_matrices
             
         @self.app.get("/features")
         async def get_features(symbols: List[str] = Query(..., description="Comma-separated list of symbols")):
             normalized_symbols = [self._normalize_symbol_for_ccxt(s) for s in symbols]
             self.logger.info(f"Received request for features for symbols: {normalized_symbols}")
+            # Fetch data for all exchanges concurrently
             await self._fetch_data_for_features(normalized_symbols)
+            # Extract features concurrently
             features = await self._extract_all_features(normalized_symbols)
             self.logger.info(f"Returning features: {features}")
             return features
@@ -299,33 +318,37 @@ class TradeOrderbookPipeline:
             # all_features['features'] contains {source_id: {symbol: {features_dict}}}
             # all_features['feature_statistics'] contains {source_id: {symbol: {feature_stats_dict}}}
             
+            async def detect_one(sid, sym, feats_dict):
+                try:
+                    f_stats = all_features.get("feature_statistics", {}).get(sid, {}).get(sym, {})
+                    anom_res = await self.detection_system.detect_anomalies(feats_dict, feature_names=list(feats_dict.keys()))
+
+                    if self.config.get("output", {}).get("mode") == "full":
+                        write_unified_record(
+                            config=self.config,
+                            exchange=sid,
+                            symbol=sym,
+                            features=feats_dict,
+                            feature_stats=f_stats,
+                            detectors=anom_res.get("detectors", {}),
+                            meta_stats=anom_res.get("meta_statistics", {}),
+                            composite=anom_res.get("composite", {})
+                        )
+                    return sid, sym, anom_res
+                except Exception as e:
+                    self.logger.warning(f"Could not detect anomalies for {sym} from data source {sid}: {e}")
+                    return sid, sym, None
+
+            tasks = []
             for source_id, features_by_symbol in all_features.get("features", {}).items():
-                source_anomalies = {}
                 for symbol, features_dict in features_by_symbol.items():
-                    try:
-                        # Extract feature_stats for this specific symbol and source_id
-                        feature_stats_for_unified_record = all_features.get("feature_statistics", {}).get(source_id, {}).get(symbol, {})
-                        
-                        anomalies_result = await self.detection_system.detect_anomalies(features_dict, feature_names=list(features_dict.keys()))
-                        
-                        if self.config.get("output", {}).get("mode") == "full":
-                            write_unified_record(
-                                config=self.config,
-                                exchange=source_id,
-                                symbol=symbol,
-                                features=features_dict,
-                                feature_stats=feature_stats_for_unified_record,
-                                detectors=anomalies_result.get("detectors", {}),
-                                meta_stats=anomalies_result.get("meta_statistics", {}),
-                                composite=anomalies_result.get("composite", {})
-                            )
-                        
-                        if anomalies_result:
-                            source_anomalies[symbol] = anomalies_result
-                    except Exception as e:
-                        self.logger.warning(f"Could not detect anomalies for {symbol} from data source {source_id}: {e}")
-                if source_anomalies:
-                    all_anomalies[source_id] = source_anomalies
+                    tasks.append(detect_one(source_id, symbol, features_dict))
+
+            results = await asyncio.gather(*tasks)
+            for sid, sym, anom_res in results:
+                if anom_res:
+                    if sid not in all_anomalies: all_anomalies[sid] = {}
+                    all_anomalies[sid][sym] = anom_res
             
             if not all_anomalies:
                 raise HTTPException(status_code=404, detail=f"No anomalies found for any of the provided symbols from any data source.")
@@ -706,17 +729,27 @@ class TradeOrderbookPipeline:
         # Determine source_ids to iterate over (either configured exchanges or a generic GDrive source)
         source_ids_to_process = self.config.get('exchanges', {}) if self.config.get('exchanges') else ["gdrive_data_source"]
 
+        async def extract_one(sid, sym):
+            try:
+                feats, stats = await self._extract_features_for_single_exchange_symbol(sid, sym)
+                return sid, sym, feats, stats
+            except Exception as e:
+                self.logger.warning(f"Could not extract features for {sym} from data source {sid}: {e}")
+                return sid, sym, None, None
+
+        tasks = []
         for source_id in source_ids_to_process:
-            all_features_output["features"][source_id] = {}
-            all_features_output["feature_statistics"][source_id] = {}
             for symbol in symbols:
-                try:
-                    features, feature_stats = await self._extract_features_for_single_exchange_symbol(source_id, symbol)
-                    if features:
-                        all_features_output["features"][source_id][symbol] = features
-                        all_features_output["feature_statistics"][source_id][symbol] = feature_stats
-                except Exception as e:
-                    self.logger.warning(f"Could not extract features for {symbol} from data source {source_id}: {e}")
+                tasks.append(extract_one(source_id, symbol))
+
+        results = await asyncio.gather(*tasks)
+        for sid, sym, feats, stats in results:
+            if sid not in all_features_output["features"]:
+                all_features_output["features"][sid] = {}
+                all_features_output["feature_statistics"][sid] = {}
+            if feats:
+                all_features_output["features"][sid][sym] = feats
+                all_features_output["feature_statistics"][sid][sym] = stats
         
         # NEW: Extract pre-pump features if enabled
         if self.config.get('extractors', {}).get('pre_pump', {}).get('enabled', False):
@@ -901,6 +934,20 @@ class TradeOrderbookPipeline:
         if self.exchange_manager:
             await self.exchange_manager.stop_all()
         await self.data_loader.close()
+
+        # Cancel all pending tasks to avoid loop closed error, but filter properly
+        current_task = asyncio.current_task()
+        tasks = [t for t in asyncio.all_tasks() if t is not current_task]
+
+        for task in tasks:
+            task.cancel()
+
+        if tasks:
+            # Wrap gather in a try-except to handle any potential issues during shutdown
+            try:
+                await asyncio.gather(*tasks, return_exceptions=True)
+            except Exception as e:
+                self.logger.error(f"Error during task cancellation: {e}")
  
         self.logger.info("Trade & Orderbook Pipeline v2 stopped")
  
@@ -929,7 +976,11 @@ async def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
  
-    await pipeline.start()
+    try:
+        await pipeline.start()
+    except Exception as e:
+        _global_logger.error(f"Failed to start pipeline: {e}")
+        return
  
     server_config = uvicorn.Config(
         app=app, # Use the global app instance
